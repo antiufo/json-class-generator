@@ -73,7 +73,7 @@ namespace JsonCSharpClassGenerator
         {
 
             if (!Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
-
+            
             var json = JObject.Parse(Example);
 
             var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);

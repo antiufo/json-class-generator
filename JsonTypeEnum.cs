@@ -47,7 +47,8 @@ namespace JsonCSharpClassGenerator
         Object,
         Array,
         Dictionary,
-        NullableSomething
+        NullableSomething,
+        NonConstrained
 
 
     }

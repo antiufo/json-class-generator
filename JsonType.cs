@@ -61,7 +61,7 @@ namespace JsonCSharpClassGenerator
         public static JsonType GetCommonType(JToken[] tokens)
         {
 
-            if (tokens.Length == 0) return new JsonType(JsonTypeEnum.Anything);
+            if (tokens.Length == 0) return new JsonType(JsonTypeEnum.NonConstrained);
 
             var common = new JsonType(tokens[0]);
             for (int i = 1; i < tokens.Length; i++)
@@ -97,6 +97,7 @@ namespace JsonCSharpClassGenerator
                     case JsonTypeEnum.Object: return true;
                     case JsonTypeEnum.Anything: return true;
                     case JsonTypeEnum.Dictionary: return true;
+                    case JsonTypeEnum.NonConstrained: return true;
                     default: return false;
                 }
             }
@@ -104,7 +105,7 @@ namespace JsonCSharpClassGenerator
 
         public string GetReaderName()
         {
-            if (Type == JsonTypeEnum.Anything || Type == JsonTypeEnum.NullableSomething)
+            if (Type == JsonTypeEnum.Anything || Type == JsonTypeEnum.NullableSomething || Type==JsonTypeEnum.NonConstrained)
             {
                 return "ReadObject";
             }
@@ -180,6 +181,7 @@ namespace JsonCSharpClassGenerator
                 case JsonTypeEnum.Integer: return "int";
                 case JsonTypeEnum.Long: return "long";
                 case JsonTypeEnum.Date: return "DateTime";
+                case JsonTypeEnum.NonConstrained: return "object";
                 case JsonTypeEnum.NullableBoolean: return "bool?";
                 case JsonTypeEnum.NullableFloat: return "double?";
                 case JsonTypeEnum.NullableInteger: return "int?";
@@ -198,6 +200,7 @@ namespace JsonCSharpClassGenerator
 
             if (commonType == JsonTypeEnum.Array)
             {
+                if (type2.Type == JsonTypeEnum.NullableSomething) return this;
                 var commonInternalType = InternalType.GetCommonType(type2.InternalType);
                 if (commonInternalType != InternalType) return new JsonType(JsonTypeEnum.Array) { InternalType = commonInternalType };
             }
@@ -224,6 +227,9 @@ namespace JsonCSharpClassGenerator
 
         private JsonTypeEnum GetCommonTypeEnum(JsonTypeEnum type1, JsonTypeEnum type2)
         {
+            if (type1 == JsonTypeEnum.NonConstrained) return type2;
+            if (type2 == JsonTypeEnum.NonConstrained) return type1;
+
             switch (type1)
             {
                 case JsonTypeEnum.Boolean:
