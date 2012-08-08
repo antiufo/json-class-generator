@@ -52,11 +52,6 @@ namespace JsonCSharpClassGenerator
             Program.InitAppServices();
         }
 
-        private void chkSeparateNamespace_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateStatus();
-        }
-
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             using (var b = new FolderBrowserDialog())
@@ -74,22 +69,31 @@ namespace JsonCSharpClassGenerator
 
         private void frmCSharpClassGeneration_FormClosing(object sender, FormClosingEventArgs e)
         {
+            var settings = Properties.Settings.Default;
+            settings.UseProperties = radProperties.Checked;
+            settings.InternalVisibility = radInternal.Checked;
+            settings.SecondaryNamespace = edtSecondaryNamespace.Text;
 
-            Properties.Settings.Default.UseProperties = radProperties.Checked;
-            Properties.Settings.Default.InternalVisibility = radInternal.Checked;
-            Properties.Settings.Default.SecondaryNamespace = edtSecondaryNamespace.Text;
-            if (!Properties.Settings.Default.UseSeparateNamespace)
+            if (radNestedClasses.Checked) settings.NamespaceStrategy = 0;
+            else if (radSameNamespace.Checked) settings.NamespaceStrategy = 1;
+            else settings.NamespaceStrategy = 2;
+
+            if (!settings.UseSeparateNamespace)
             {
-                Properties.Settings.Default.SecondaryNamespace = string.Empty;
+                settings.SecondaryNamespace = string.Empty;
             }
-            Properties.Settings.Default.Save();
+            settings.Save();
         }
 
         private void frmCSharpClassGeneration_Load(object sender, EventArgs e)
         {
-            (Properties.Settings.Default.UseProperties ? radProperties : radFields).Checked = true;
-            (Properties.Settings.Default.InternalVisibility ? radInternal : radPublic).Checked = true;
-            edtSecondaryNamespace.Text = Properties.Settings.Default.SecondaryNamespace;
+            var settings = Properties.Settings.Default;
+            (settings.UseProperties ? radProperties : radFields).Checked = true;
+            (settings.InternalVisibility ? radInternal : radPublic).Checked = true;
+            edtSecondaryNamespace.Text = settings.SecondaryNamespace;
+            if (settings.NamespaceStrategy == 0) radNestedClasses.Checked = true;
+            else if (settings.NamespaceStrategy == 1) radSameNamespace.Checked = true;
+            else radDifferentNamespace.Checked = true;
             UpdateStatus();
         }
 
@@ -123,11 +127,12 @@ namespace JsonCSharpClassGenerator
             gen.ExplicitDeserialization = chkExplicitDeserialization.Checked;
             gen.Namespace = edtNamespace.Text;
             gen.NoHelperClass = chkNoHelper.Checked;
-            gen.SecondaryNamespace = chkSeparateNamespace.Checked ? edtSecondaryNamespace.Text : null;
+            gen.SecondaryNamespace = radDifferentNamespace.Checked ? edtSecondaryNamespace.Text : null;
             gen.TargetFolder = edtTargetFolder.Text;
             gen.UseProperties = radProperties.Checked;
             gen.MainClass = edtMainClass.Text;
             gen.UsePascalCase = chkPascalCase.Checked;
+            gen.UseNestedClasses = radNestedClasses.Checked;
             /*   try
                {*/
             gen.GenerateClasses();
@@ -167,7 +172,7 @@ namespace JsonCSharpClassGenerator
                 edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + ".JsonTypes";
             }
 
-            if (chkSeparateNamespace.Checked)
+            if (radDifferentNamespace.Checked)
             {
                 if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "MyProject.JsonTypes";
                 edtSecondaryNamespace.Enabled = true;
@@ -176,6 +181,21 @@ namespace JsonCSharpClassGenerator
             {
                 edtSecondaryNamespace.Enabled = false;
             }
+        }
+
+        private void radNestedClasses_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void radSameNamespace_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void radDifferentNamespace_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
         }
 
         //private void edtMainClass_Enter(object sender, EventArgs e)

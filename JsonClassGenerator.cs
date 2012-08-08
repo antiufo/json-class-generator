@@ -49,6 +49,7 @@ namespace JsonCSharpClassGenerator
         public bool NoHelperClass;
         public string MainClass;
         public bool UsePascalCase;
+        public bool UseNestedClasses;
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
@@ -122,6 +123,14 @@ namespace JsonCSharpClassGenerator
             //    var totalMembers = fields.Count;
             //   var totalInstances = examples.Sum(x => x.Count);
 
+            if (UseNestedClasses)
+            {
+                foreach (var field in fields)
+                {
+                    GeneratedNames.Add(field.Key.ToLower());
+                }
+            }
+
             foreach (var field in fields)
             {
                 var type = field.Value;
@@ -181,7 +190,7 @@ namespace JsonCSharpClassGenerator
 
             var shouldSuppressWarning = InternalVisibility && !UseProperties && !ExplicitDeserialization;
 
-            using (var sw = new StreamWriter(Path.Combine(TargetFolder, className + ".cs"), false, Encoding.UTF8))
+            using (var sw = new StreamWriter(Path.Combine(TargetFolder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + ".cs"), false, Encoding.UTF8))
             {
 
                 sw.WriteLine("// JSON C# Class Generator");
@@ -194,17 +203,33 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine("using Newtonsoft.Json.Linq;");
                 if (ExplicitDeserialization)
                     sw.WriteLine("using JsonCSharpClassGenerator;");
-                if (SecondaryNamespace != null && isRoot && hasSecondaryClasses)
+                if (SecondaryNamespace != null && isRoot && hasSecondaryClasses && !UseNestedClasses)
                 {
                     sw.WriteLine("using {0};", SecondaryNamespace);
                 }
                 sw.WriteLine();
-                sw.WriteLine("namespace {0}", isRoot ? Namespace : NamespaceForSecondaryClasses);
+                sw.WriteLine("namespace {0}", isRoot && !UseNestedClasses ? Namespace : NamespaceForSecondaryClasses);
                 sw.WriteLine("{");
                 sw.WriteLine();
 
-                sw.WriteLine("    {0} class {1}", Visibility, className);
-                sw.WriteLine("    {");
+                if (UseNestedClasses)
+                {
+                    sw.WriteLine("    {0} partial class {1}", Visibility, MainClass);
+                    sw.WriteLine("    {");
+                    if (!isRoot)
+                    {
+                        sw.WriteLine("        {0} class {1}", Visibility, className);
+                        sw.WriteLine("        {");
+                    }
+                }
+                else
+                {
+                    sw.WriteLine("    {0} class {1}", Visibility, className);
+                    sw.WriteLine("    {");
+                }
+
+                var prefix = UseNestedClasses && !isRoot ? "            " : "        ";
+
 
                 if (shouldSuppressWarning)
                 {
@@ -212,16 +237,16 @@ namespace JsonCSharpClassGenerator
                     if (!UsePascalCase) sw.WriteLine();
                 }
 
-                if (isRoot && ExplicitDeserialization) WriteStringConstructor(sw, className);
+                if (isRoot && ExplicitDeserialization) WriteStringConstructor(sw, className, prefix);
 
                 if (ExplicitDeserialization)
                 {
-                    if (UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fieldsList, isRoot);
-                    else WriteClassWithFieldsExplicitDeserialization(sw, className, fieldsList, isRoot);
+                    if (UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fieldsList, isRoot, prefix);
+                    else WriteClassWithFieldsExplicitDeserialization(sw, className, fieldsList, isRoot, prefix);
                 }
                 else
                 {
-                    WriteClassMembers(sw, fieldsList);
+                    WriteClassMembers(sw, fieldsList, prefix);
                 }
 
                 if (shouldSuppressWarning)
@@ -230,6 +255,10 @@ namespace JsonCSharpClassGenerator
                     sw.WriteLine("#pragma warning restore 0649");
                     sw.WriteLine();
                 }
+
+
+                if (UseNestedClasses && !isRoot)
+                    sw.WriteLine("        }");
 
                 sw.WriteLine("    }");
 
@@ -275,37 +304,37 @@ namespace JsonCSharpClassGenerator
             return CreateName(pluralizationService.Singularize(plural));
         }
 
-        private void WriteStringConstructor(StreamWriter sw, string className)
+        private void WriteStringConstructor(StreamWriter sw, string className, string prefix)
         {
             sw.WriteLine();
-            sw.WriteLine("        public {1}(string json)", Visibility, className);
-            sw.WriteLine("         : this(JObject.Parse(json))");
-            sw.WriteLine("        {");
-            sw.WriteLine("        }");
+            sw.WriteLine(prefix + "public {1}(string json)", Visibility, className);
+            sw.WriteLine(prefix + "    : this(JObject.Parse(json))");
+            sw.WriteLine(prefix + "{");
+            sw.WriteLine(prefix + "}");
             sw.WriteLine();
         }
 
-        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
+        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
         {
 
 
-            sw.WriteLine("        public {0}(JObject obj)", className);
-            sw.WriteLine("        {");
+            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
+            sw.WriteLine(prefix + "{");
 
             foreach (var field in fields)
             {
-                sw.WriteLine("           this.{0} = {1};", field.MemberName, field.GetGenerationCode("obj"));
+                sw.WriteLine(prefix + "    this.{0} = {1};", field.MemberName, field.GetGenerationCode("obj"));
 
             }
 
-            sw.WriteLine("        }");
+            sw.WriteLine(prefix + "}");
             sw.WriteLine();
 
 
 
             foreach (var field in fields)
             {
-                sw.WriteLine("        public readonly {0} {1};", field.Type.GetCSharpType(false), field.MemberName);
+                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(false), field.MemberName);
             }
 
 
@@ -318,29 +347,28 @@ namespace JsonCSharpClassGenerator
 
             foreach (var field in fields)
             {
-             }
+            }
 
         }
 
-        
-        private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields)
-        {
 
+        private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields, string prefix)
+        {
             foreach (var field in fields)
             {
                 if (UsePascalCase)
                 {
                     sw.WriteLine();
-                    sw.WriteLine("        [JsonProperty(\"{0}\")]", field.JsonMemberName);
+                    sw.WriteLine(prefix + "[JsonProperty(\"{0}\")]", field.JsonMemberName);
                 }
 
                 if (UseProperties)
                 {
-                    sw.WriteLine("        public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(true), field.MemberName);
+                    sw.WriteLine(prefix + "public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(true), field.MemberName);
                 }
                 else
                 {
-                    sw.WriteLine("        public {0} {1};", field.Type.GetCSharpType(true), field.MemberName);
+                    sw.WriteLine(prefix + "public {0} {1};", field.Type.GetCSharpType(true), field.MemberName);
                 }
             }
 
@@ -353,15 +381,14 @@ namespace JsonCSharpClassGenerator
 
 
 
-        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
+        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
         {
 
-
-            sw.WriteLine("        private JObject __jobject;");
-            sw.WriteLine("        public {0}(JObject obj)", className);
-            sw.WriteLine("        {");
-            sw.WriteLine("            this.__jobject = obj;");
-            sw.WriteLine("        }");
+            sw.WriteLine(prefix + "private JObject __jobject;");
+            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
+            sw.WriteLine(prefix + "{");
+            sw.WriteLine(prefix + "    this.__jobject = obj;");
+            sw.WriteLine(prefix + "}");
             sw.WriteLine();
 
             foreach (var field in fields)
@@ -371,27 +398,27 @@ namespace JsonCSharpClassGenerator
                 if (field.Type.MustCache)
                 {
                     variable = "_" + char.ToLower(field.MemberName[0]) + field.MemberName.Substring(1);
-                    sw.WriteLine("        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]");
-                    sw.WriteLine("        private {0} {1};", field.Type.GetCSharpType(false), variable);
+                    sw.WriteLine(prefix + "[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]");
+                    sw.WriteLine(prefix + "private {0} {1};", field.Type.GetCSharpType(false), variable);
                 }
 
 
-                sw.WriteLine("        public {0} {1}", field.Type.GetCSharpType(false), field.MemberName);
-                sw.WriteLine("        {");
-                sw.WriteLine("            get");
-                sw.WriteLine("            {");
+                sw.WriteLine(prefix + "public {0} {1}", field.Type.GetCSharpType(false), field.MemberName);
+                sw.WriteLine(prefix + "{");
+                sw.WriteLine(prefix + "    get");
+                sw.WriteLine(prefix + "    {");
                 if (field.Type.MustCache)
                 {
-                    sw.WriteLine("                if({0} == null)", variable);
-                    sw.WriteLine("                    {0} = {1};", variable, field.GetGenerationCode("__jobject"));
-                    sw.WriteLine("                return {0};", variable);
+                    sw.WriteLine(prefix + "        if({0} == null)", variable);
+                    sw.WriteLine(prefix + "            {0} = {1};", variable, field.GetGenerationCode("__jobject"));
+                    sw.WriteLine(prefix + "        return {0};", variable);
                 }
                 else
                 {
-                    sw.WriteLine("                return {0};", field.GetGenerationCode("__jobject"));
+                    sw.WriteLine(prefix + "        return {0};", field.GetGenerationCode("__jobject"));
                 }
-                sw.WriteLine("            }");
-                sw.WriteLine("        }");
+                sw.WriteLine(prefix + "    }");
+                sw.WriteLine(prefix + "}");
                 sw.WriteLine();
 
             }

@@ -142,5 +142,17 @@ namespace JsonCSharpClassGenerator.Properties {
                 this["UseExplicitDeserialization"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int NamespaceStrategy {
+            get {
+                return ((int)(this["NamespaceStrategy"]));
+            }
+            set {
+                this["NamespaceStrategy"] = value;
+            }
+        }
     }
 }
