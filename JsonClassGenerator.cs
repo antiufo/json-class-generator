@@ -409,7 +409,7 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine(prefix + "    {");
                 if (field.Type.MustCache)
                 {
-                    sw.WriteLine(prefix + "        if({0} == null)", variable);
+                    sw.WriteLine(prefix + "        if ({0} == null)", variable);
                     sw.WriteLine(prefix + "            {0} = {1};", variable, field.GetGenerationCode("__jobject"));
                     sw.WriteLine(prefix + "        return {0};", variable);
                 }
