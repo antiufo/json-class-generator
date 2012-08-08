@@ -204,10 +204,12 @@ namespace JsonCSharpClassGenerator
 
                 sw.WriteLine("    {0} class {1}", Visibility, className);
                 sw.WriteLine("    {");
-                sw.WriteLine();
 
                 if (shouldSuppressWarning)
+                {
                     sw.WriteLine("#pragma warning disable 0649");
+                    if (!UsePascalCase) sw.WriteLine();
+                }
 
                 if (isRoot && ExplicitDeserialization) WriteStringConstructor(sw, className);
 
@@ -222,7 +224,11 @@ namespace JsonCSharpClassGenerator
                 }
 
                 if (shouldSuppressWarning)
+                {
+                    sw.WriteLine();
                     sw.WriteLine("#pragma warning restore 0649");
+                    sw.WriteLine();
+                }
 
                 sw.WriteLine("    }");
 
@@ -270,6 +276,7 @@ namespace JsonCSharpClassGenerator
 
         private void WriteStringConstructor(StreamWriter sw, string className)
         {
+            sw.WriteLine();
             sw.WriteLine("        public {1}(string json)", Visibility, className);
             sw.WriteLine("         : this(JObject.Parse(json))");
             sw.WriteLine("        {");
