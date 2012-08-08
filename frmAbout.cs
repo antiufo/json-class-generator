@@ -41,6 +41,7 @@ namespace JsonCSharpClassGenerator
             btnSendFeedback.Visible = false;
             btnCheckUpdates.Visible = false;
 #endif
+            this.Font = SystemFonts.MessageBoxFont;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
