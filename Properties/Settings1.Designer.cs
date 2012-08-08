@@ -25,7 +25,7 @@ namespace JsonCSharpClassGenerator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyProject")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Example")]
         public string Namespace {
             get {
                 return ((string)(this["Namespace"]));
@@ -49,7 +49,7 @@ namespace JsonCSharpClassGenerator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyProject.JsonTypes")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Example.JsonTypes")]
         public string SecondaryNamespace {
             get {
                 return ((string)(this["SecondaryNamespace"]));

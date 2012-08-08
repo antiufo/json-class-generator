@@ -174,7 +174,7 @@ namespace JsonCSharpClassGenerator
 
             if (radDifferentNamespace.Checked)
             {
-                if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "MyProject.JsonTypes";
+                if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "Example.JsonTypes";
                 edtSecondaryNamespace.Enabled = true;
             }
             else
