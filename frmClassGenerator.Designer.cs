@@ -48,15 +48,20 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnAbout = new System.Windows.Forms.Button();
             this.btnPaste = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.radSameNamespace = new System.Windows.Forms.RadioButton();
+            this.radDifferentNamespace = new System.Windows.Forms.RadioButton();
+            this.radNestedClasses = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.chkExplicitDeserialization = new System.Windows.Forms.CheckBox();
             this.chkPascalCase = new System.Windows.Forms.CheckBox();
             this.edtMainClass = new System.Windows.Forms.TextBox();
             this.edtTargetFolder = new System.Windows.Forms.TextBox();
-            this.chkSeparateNamespace = new System.Windows.Forms.CheckBox();
             this.chkNoHelper = new System.Windows.Forms.CheckBox();
             this.edtNamespace = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGenerate
@@ -75,18 +80,18 @@
             this.edtJson.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.edtJson.Location = new System.Drawing.Point(15, 219);
+            this.edtJson.Location = new System.Drawing.Point(15, 244);
             this.edtJson.MaxLength = 10000000;
             this.edtJson.Multiline = true;
             this.edtJson.Name = "edtJson";
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.edtJson.Size = new System.Drawing.Size(680, 304);
+            this.edtJson.Size = new System.Drawing.Size(680, 279);
             this.edtJson.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 203);
+            this.label1.Location = new System.Drawing.Point(15, 228);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(199, 13);
             this.label1.TabIndex = 9;
@@ -220,7 +225,8 @@
             // 
             // edtSecondaryNamespace
             // 
-            this.edtSecondaryNamespace.Location = new System.Drawing.Point(35, 118);
+            this.edtSecondaryNamespace.Location = new System.Drawing.Point(30, 72);
+            this.edtSecondaryNamespace.Margin = new System.Windows.Forms.Padding(30, 3, 3, 3);
             this.edtSecondaryNamespace.Name = "edtSecondaryNamespace";
             this.edtSecondaryNamespace.Size = new System.Drawing.Size(151, 20);
             this.edtSecondaryNamespace.TabIndex = 5;
@@ -255,6 +261,64 @@
             this.btnPaste.Text = "Paste";
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 93);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(99, 13);
+            this.label6.TabIndex = 30;
+            this.label6.Text = "Secondary classes:";
+            // 
+            // radSameNamespace
+            // 
+            this.radSameNamespace.AutoSize = true;
+            this.radSameNamespace.Location = new System.Drawing.Point(3, 26);
+            this.radSameNamespace.Name = "radSameNamespace";
+            this.radSameNamespace.Size = new System.Drawing.Size(148, 17);
+            this.radSameNamespace.TabIndex = 31;
+            this.radSameNamespace.TabStop = true;
+            this.radSameNamespace.Text = "Use the same namespace";
+            this.radSameNamespace.UseVisualStyleBackColor = true;
+            this.radSameNamespace.CheckedChanged += new System.EventHandler(this.radSameNamespace_CheckedChanged);
+            // 
+            // radDifferentNamespace
+            // 
+            this.radDifferentNamespace.AutoSize = true;
+            this.radDifferentNamespace.Location = new System.Drawing.Point(3, 49);
+            this.radDifferentNamespace.Name = "radDifferentNamespace";
+            this.radDifferentNamespace.Size = new System.Drawing.Size(152, 17);
+            this.radDifferentNamespace.TabIndex = 32;
+            this.radDifferentNamespace.TabStop = true;
+            this.radDifferentNamespace.Text = "Use a different namespace";
+            this.radDifferentNamespace.UseVisualStyleBackColor = true;
+            this.radDifferentNamespace.CheckedChanged += new System.EventHandler(this.radDifferentNamespace_CheckedChanged);
+            // 
+            // radNestedClasses
+            // 
+            this.radNestedClasses.AutoSize = true;
+            this.radNestedClasses.Location = new System.Drawing.Point(3, 3);
+            this.radNestedClasses.Name = "radNestedClasses";
+            this.radNestedClasses.Size = new System.Drawing.Size(117, 17);
+            this.radNestedClasses.TabIndex = 33;
+            this.radNestedClasses.TabStop = true;
+            this.radNestedClasses.Text = "Use nested classes";
+            this.radNestedClasses.UseVisualStyleBackColor = true;
+            this.radNestedClasses.CheckedChanged += new System.EventHandler(this.radNestedClasses_CheckedChanged);
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.radNestedClasses);
+            this.flowLayoutPanel3.Controls.Add(this.radSameNamespace);
+            this.flowLayoutPanel3.Controls.Add(this.radDifferentNamespace);
+            this.flowLayoutPanel3.Controls.Add(this.edtSecondaryNamespace);
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(33, 109);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(200, 100);
+            this.flowLayoutPanel3.TabIndex = 34;
+            this.flowLayoutPanel3.WrapContents = false;
             // 
             // chkExplicitDeserialization
             // 
@@ -302,20 +366,6 @@
             this.edtTargetFolder.TabIndex = 2;
             this.edtTargetFolder.Text = global::JsonCSharpClassGenerator.Properties.Settings.Default.TargetFolder;
             // 
-            // chkSeparateNamespace
-            // 
-            this.chkSeparateNamespace.AutoSize = true;
-            this.chkSeparateNamespace.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.UseSeparateNamespace;
-            this.chkSeparateNamespace.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSeparateNamespace.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "UseSeparateNamespace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkSeparateNamespace.Location = new System.Drawing.Point(12, 101);
-            this.chkSeparateNamespace.Name = "chkSeparateNamespace";
-            this.chkSeparateNamespace.Size = new System.Drawing.Size(264, 17);
-            this.chkSeparateNamespace.TabIndex = 4;
-            this.chkSeparateNamespace.Text = "Use a separate namespace for secondary classes:";
-            this.chkSeparateNamespace.UseVisualStyleBackColor = true;
-            this.chkSeparateNamespace.CheckedChanged += new System.EventHandler(this.chkSeparateNamespace_CheckedChanged);
-            // 
             // chkNoHelper
             // 
             this.chkNoHelper.AutoSize = true;
@@ -344,6 +394,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.flowLayoutPanel3);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkExplicitDeserialization);
             this.Controls.Add(this.btnPaste);
             this.Controls.Add(this.chkPascalCase);
@@ -357,8 +409,6 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.edtSecondaryNamespace);
-            this.Controls.Add(this.chkSeparateNamespace);
             this.Controls.Add(this.chkNoHelper);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblNamespace);
@@ -375,6 +425,8 @@
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -389,7 +441,6 @@
         private System.Windows.Forms.Label lblNamespace;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.CheckBox chkNoHelper;
-        private System.Windows.Forms.CheckBox chkSeparateNamespace;
         private System.Windows.Forms.TextBox edtSecondaryNamespace;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton radFields;
@@ -408,6 +459,11 @@
         private System.Windows.Forms.CheckBox chkPascalCase;
         private System.Windows.Forms.Button btnPaste;
         private System.Windows.Forms.CheckBox chkExplicitDeserialization;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton radSameNamespace;
+        private System.Windows.Forms.RadioButton radDifferentNamespace;
+        private System.Windows.Forms.RadioButton radNestedClasses;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
     }
 }
 
