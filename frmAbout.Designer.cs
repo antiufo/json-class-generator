@@ -65,7 +65,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(23, 118);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(192, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(173, 13);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "http://at-my-window.blogspot.com/";
@@ -76,7 +76,7 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Location = new System.Drawing.Point(23, 69);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(61, 13);
+            this.lblVersion.Size = new System.Drawing.Size(59, 13);
             this.lblVersion.TabIndex = 3;
             this.lblVersion.Text = "Version {0}";
             // 
@@ -85,9 +85,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(23, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 13);
+            this.label1.Size = new System.Drawing.Size(198, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Copyright © 2010 Andrea Martinelli";
+            this.label1.Text = "Copyright © 2010-2012 Andrea Martinelli";
             // 
             // btnSendFeedback
             // 
