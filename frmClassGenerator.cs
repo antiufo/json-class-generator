@@ -43,7 +43,7 @@ namespace JsonCSharpClassGenerator
 
 
 
-        
+
         public frmCSharpClassGeneration()
         {
             InitializeComponent();
@@ -54,15 +54,7 @@ namespace JsonCSharpClassGenerator
 
         private void chkSeparateNamespace_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkSeparateNamespace.Checked)
-            {
-                if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "MyProject.JsonTypes";
-                edtSecondaryNamespace.Enabled = true;
-            }
-            else
-            {
-                edtSecondaryNamespace.Enabled = false;
-            }
+            UpdateStatus();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -98,23 +90,13 @@ namespace JsonCSharpClassGenerator
             (Properties.Settings.Default.UseProperties ? radProperties : radFields).Checked = true;
             (Properties.Settings.Default.InternalVisibility ? radInternal : radPublic).Checked = true;
             edtSecondaryNamespace.Text = Properties.Settings.Default.SecondaryNamespace;
+            UpdateStatus();
         }
 
         private void edtNamespace_TextChanged(object sender, EventArgs e)
         {
-
-            if (edtSecondaryNamespace.Text.EndsWith(".JsonTypes") || edtSecondaryNamespace.Text == string.Empty)
-            {
-                GenerateSubNamespaceName();
-            }
-
+            UpdateStatus();
         }
-
-        private void GenerateSubNamespaceName()
-        {
-            edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + ".JsonTypes";
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
@@ -138,6 +120,7 @@ namespace JsonCSharpClassGenerator
             var gen = new JsonClassGenerator();
             gen.Example = edtJson.Text;
             gen.InternalVisibility = radInternal.Checked;
+            gen.ExplicitDeserialization = chkExplicitDeserialization.Checked;
             gen.Namespace = edtNamespace.Text;
             gen.NoHelperClass = chkNoHelper.Checked;
             gen.SecondaryNamespace = chkSeparateNamespace.Checked ? edtSecondaryNamespace.Text : null;
@@ -145,15 +128,15 @@ namespace JsonCSharpClassGenerator
             gen.UseProperties = radProperties.Checked;
             gen.MainClass = edtMainClass.Text;
             gen.UsePascalCase = chkPascalCase.Checked;
-         /*   try
-            {*/
-                gen.GenerateClasses();
-                MessageBox.Show(this, "The code has been generated successfully.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-          /*  }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+            /*   try
+               {*/
+            gen.GenerateClasses();
+            MessageBox.Show(this, "The code has been generated successfully.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            /*  }
+              catch (Exception ex)
+              {
+                  MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+              }*/
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
@@ -167,6 +150,32 @@ namespace JsonCSharpClassGenerator
         private void btnPaste_Click(object sender, EventArgs e)
         {
             edtJson.Text = Clipboard.GetText();
+        }
+
+        private void chkExplicitDeserialization_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void UpdateStatus()
+        {
+            chkNoHelper.Enabled = chkExplicitDeserialization.Checked;
+
+
+            if (edtSecondaryNamespace.Text.EndsWith(".JsonTypes") || edtSecondaryNamespace.Text == string.Empty)
+            {
+                edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + ".JsonTypes";
+            }
+
+            if (chkSeparateNamespace.Checked)
+            {
+                if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "MyProject.JsonTypes";
+                edtSecondaryNamespace.Enabled = true;
+            }
+            else
+            {
+                edtSecondaryNamespace.Enabled = false;
+            }
         }
 
         //private void edtMainClass_Enter(object sender, EventArgs e)

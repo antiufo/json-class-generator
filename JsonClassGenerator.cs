@@ -45,6 +45,7 @@ namespace JsonCSharpClassGenerator
         public string SecondaryNamespace;
         public bool UseProperties;
         public bool InternalVisibility;
+        public bool ExplicitDeserialization;
         public bool NoHelperClass;
         public string MainClass;
         public bool UsePascalCase;
@@ -73,11 +74,11 @@ namespace JsonCSharpClassGenerator
         {
 
             if (!Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
-            
+
             var json = JObject.Parse(Example);
 
             var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            if (!NoHelperClass) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
+            if (!NoHelperClass && ExplicitDeserialization) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
             GeneratedNames.Add(MainClass.ToLower());
             GenerateClass(new JObject[] { json }, MainClass, true);
 
@@ -118,8 +119,8 @@ namespace JsonCSharpClassGenerator
                 first = false;
             }
 
-        //    var totalMembers = fields.Count;
-         //   var totalInstances = examples.Sum(x => x.Count);
+            //    var totalMembers = fields.Count;
+            //   var totalInstances = examples.Sum(x => x.Count);
 
             foreach (var field in fields)
             {
@@ -144,7 +145,7 @@ namespace JsonCSharpClassGenerator
                     hasSecondaryClasses = true;
                 }
 
-                if (type.InternalType !=null && type.InternalType.Type == JsonTypeEnum.Object)
+                if (type.InternalType != null && type.InternalType.Type == JsonTypeEnum.Object)
                 {
                     var subexamples = new List<JObject>(examples.Length);
                     foreach (var obj in examples)
@@ -170,13 +171,15 @@ namespace JsonCSharpClassGenerator
                         }
                     }
 
-                    field.Value.InternalType.AssignName(CreateNameFromPlural( field.Key));
+                    field.Value.InternalType.AssignName(CreateNameFromPlural(field.Key));
                     GenerateClass(subexamples.ToArray(), field.Value.InternalType.AssignedName, false);
                     hasSecondaryClasses = true;
                 }
             }
 
             var fieldsList = fields.Select(x => new FieldInfo(x.Key, x.Value, UsePascalCase)).ToArray();
+
+            var shouldSuppressWarning = InternalVisibility && !UseProperties && !ExplicitDeserialization;
 
             using (var sw = new StreamWriter(Path.Combine(TargetFolder, className + ".cs"), false, Encoding.UTF8))
             {
@@ -185,8 +188,11 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine("// http://at-my-window.blogspot.com/?page=json-class-generator");
                 sw.WriteLine();
                 sw.WriteLine("using System;");
+                if (!ExplicitDeserialization && UsePascalCase)
+                    sw.WriteLine("using Newtonsoft.Json;");
                 sw.WriteLine("using Newtonsoft.Json.Linq;");
-                sw.WriteLine("using JsonCSharpClassGenerator;");
+                if (ExplicitDeserialization)
+                    sw.WriteLine("using JsonCSharpClassGenerator;");
                 if (SecondaryNamespace != null && isRoot && hasSecondaryClasses)
                 {
                     sw.WriteLine("using {0};", SecondaryNamespace);
@@ -200,12 +206,27 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine("    {");
                 sw.WriteLine();
 
-                if (isRoot) WriteStringConstructor(sw, className);
+                if (shouldSuppressWarning)
+                    sw.WriteLine("#pragma warning disable 0649");
 
-                if (UseProperties) WriteClassWithProperties(sw, className, fieldsList, isRoot);
-                else WriteClassWithFields(sw, className, fieldsList, isRoot);
+                if (isRoot && ExplicitDeserialization) WriteStringConstructor(sw, className);
+
+                if (ExplicitDeserialization)
+                {
+                    if (UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fieldsList, isRoot);
+                    else WriteClassWithFieldsExplicitDeserialization(sw, className, fieldsList, isRoot);
+                }
+                else
+                {
+                    WriteClassMembers(sw, fieldsList);
+                }
+
+                if (shouldSuppressWarning)
+                    sw.WriteLine("#pragma warning restore 0649");
 
                 sw.WriteLine("    }");
+
+
                 sw.WriteLine("}");
 
 
@@ -221,9 +242,9 @@ namespace JsonCSharpClassGenerator
 
         private string CreateName(string name)
         {
-            name=ToTitleCase(name);
+            name = ToTitleCase(name);
 
-            var finalName=name;
+            var finalName = name;
             if (GeneratedNames.Contains(finalName.ToLower()))
             {
                 var i = 2;
@@ -238,7 +259,8 @@ namespace JsonCSharpClassGenerator
             return finalName;
         }
 
-        private string CreateNameFromPlural(string plural) {
+        private string CreateNameFromPlural(string plural)
+        {
             plural = ToTitleCase(plural);
 
 
@@ -255,7 +277,7 @@ namespace JsonCSharpClassGenerator
             sw.WriteLine();
         }
 
-        private void WriteClassWithFields(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
+        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
         {
 
 
@@ -283,6 +305,38 @@ namespace JsonCSharpClassGenerator
         }
 
 
+        private void WriteClassWithProperties(StreamWriter sw, FieldInfo[] fields)
+        {
+
+            foreach (var field in fields)
+            {
+             }
+
+        }
+
+        
+        private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields)
+        {
+
+            foreach (var field in fields)
+            {
+                if (UsePascalCase)
+                {
+                    sw.WriteLine();
+                    sw.WriteLine("        [JsonProperty(\"{0}\")]", field.JsonMemberName);
+                }
+
+                if (UseProperties)
+                {
+                    sw.WriteLine("        public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(), field.MemberName);
+                }
+                else
+                {
+                    sw.WriteLine("        public {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+                }
+            }
+
+        }
 
 
 
@@ -291,9 +345,7 @@ namespace JsonCSharpClassGenerator
 
 
 
-
-
-        private void WriteClassWithProperties(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
+        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot)
         {
 
 
