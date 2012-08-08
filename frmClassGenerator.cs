@@ -143,15 +143,15 @@ namespace JsonCSharpClassGenerator
             gen.MainClass = edtMainClass.Text;
             gen.UsePascalCase = chkPascalCase.Checked;
             gen.UseNestedClasses = radNestedClasses.Checked;
-            /*   try
-               {*/
-            gen.GenerateClasses();
-            MessageBox.Show(this, "The code has been generated successfully.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            /*  }
-              catch (Exception ex)
-              {
-                  MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-              }*/
+            try
+            {
+                gen.GenerateClasses();
+                MessageBox.Show(this, "The code has been generated successfully.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
