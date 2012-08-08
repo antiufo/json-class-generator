@@ -87,9 +87,7 @@
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonClassGenerator.cs" />
-    <Compile Include="JsonClassHelper.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <None Include="JsonClassHelper.cs" />
     <Compile Include="JsonType.cs" />
     <Compile Include="JsonTypeEnum.cs" />
     <Compile Include="Program.cs" />

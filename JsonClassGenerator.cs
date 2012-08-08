@@ -77,7 +77,7 @@ namespace JsonCSharpClassGenerator
             var json = JObject.Parse(Example);
 
             var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            if (!NoHelperClass) File.Copy(Path.Combine(parentFolder, "JsonClassHelper.cs"), Path.Combine(TargetFolder, "JsonClassHelper.cs"), true);
+            if (!NoHelperClass) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
             GeneratedNames.Add(MainClass.ToLower());
             GenerateClass(new JObject[] { json }, MainClass, true);
 
