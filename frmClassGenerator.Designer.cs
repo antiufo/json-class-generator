@@ -230,7 +230,7 @@
             this.edtSecondaryNamespace.Name = "edtSecondaryNamespace";
             this.edtSecondaryNamespace.Size = new System.Drawing.Size(219, 20);
             this.edtSecondaryNamespace.TabIndex = 5;
-            this.edtSecondaryNamespace.Text = "MyProject.JsonTypes";
+            this.edtSecondaryNamespace.Text = "Example.JsonTypes";
             // 
             // label5
             // 
