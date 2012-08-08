@@ -56,7 +56,7 @@ namespace JsonCSharpClassGenerator
         private void btnSendFeedback_Click(object sender, EventArgs e)
         {
 #if APPSERVICES
-            Program.appServices.ShowDialogFeedbackForm(this);
+            Program.appServices.ShowFeedbackForm(this);
 #endif
         }
 
