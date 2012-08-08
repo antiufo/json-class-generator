@@ -243,8 +243,9 @@
             // 
             // btnAbout
             // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAbout.Image = global::JsonCSharpClassGenerator.Properties.Resources.help;
-            this.btnAbout.Location = new System.Drawing.Point(626, 7);
+            this.btnAbout.Location = new System.Drawing.Point(669, 6);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(26, 24);
             this.btnAbout.TabIndex = 26;
