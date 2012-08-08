@@ -201,6 +201,7 @@ namespace JsonCSharpClassGenerator
             if (commonType == JsonTypeEnum.Array)
             {
                 if (type2.Type == JsonTypeEnum.NullableSomething) return this;
+                if (this.Type == JsonTypeEnum.NullableSomething) return type2;
                 var commonInternalType = InternalType.GetCommonType(type2.InternalType);
                 if (commonInternalType != InternalType) return new JsonType(JsonTypeEnum.Array) { InternalType = commonInternalType };
             }
