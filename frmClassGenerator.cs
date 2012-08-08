@@ -120,6 +120,16 @@ namespace JsonCSharpClassGenerator
                 MessageBox.Show(this, "Please specify an output directory.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (edtNamespace.Text == string.Empty)
+            {
+                MessageBox.Show(this, "Please specify a namespace.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (edtMainClass.Text == string.Empty)
+            {
+                MessageBox.Show(this, "Please specify a main class name.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             var gen = new JsonClassGenerator();
             gen.Example = edtJson.Text;
@@ -172,15 +182,7 @@ namespace JsonCSharpClassGenerator
                 edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + "." + edtMainClass.Text + "JsonTypes";
             }
 
-            if (radDifferentNamespace.Checked)
-            {
-                if (string.IsNullOrEmpty(edtSecondaryNamespace.Text)) edtSecondaryNamespace.Text = "Example.JsonTypes";
-                edtSecondaryNamespace.Enabled = true;
-            }
-            else
-            {
-                edtSecondaryNamespace.Enabled = false;
-            }
+            edtSecondaryNamespace.Enabled = radDifferentNamespace.Checked;
         }
 
         private void radNestedClasses_CheckedChanged(object sender, EventArgs e)
