@@ -47,6 +47,7 @@ namespace JsonCSharpClassGenerator
         public frmCSharpClassGeneration()
         {
             InitializeComponent();
+            this.Font = SystemFonts.MessageBoxFont;
 
             Program.InitAppServices();
         }
