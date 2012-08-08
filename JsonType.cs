@@ -79,7 +79,7 @@ namespace JsonCSharpClassGenerator
         public JsonType InternalType { get; private set; }
         public string AssignedName { get; private set; }
 
- 
+
         public void AssignName(string name)
         {
             AssignedName = name;
@@ -105,17 +105,17 @@ namespace JsonCSharpClassGenerator
 
         public string GetReaderName()
         {
-            if (Type == JsonTypeEnum.Anything || Type == JsonTypeEnum.NullableSomething || Type==JsonTypeEnum.NonConstrained)
+            if (Type == JsonTypeEnum.Anything || Type == JsonTypeEnum.NullableSomething || Type == JsonTypeEnum.NonConstrained)
             {
                 return "ReadObject";
             }
             if (Type == JsonTypeEnum.Object)
             {
-                return string.Format( "ReadStronglyTypedObject<{0}>", AssignedName);
+                return string.Format("ReadStronglyTypedObject<{0}>", AssignedName);
             }
             else if (Type == JsonTypeEnum.Array)
             {
-                return string.Format("ReadArray<{0}>", InternalType.GetCSharpType());
+                return string.Format("ReadArray<{0}>", InternalType.GetCSharpType(false));
             }
             else
             {
@@ -168,14 +168,14 @@ namespace JsonCSharpClassGenerator
             }
         }
 
-        
-        public string GetCSharpType()
+
+        public string GetCSharpType(bool useLists)
         {
             switch (Type)
             {
                 case JsonTypeEnum.Anything: return "object";
-                case JsonTypeEnum.Array: return InternalType.GetCSharpType() + "[]";
-                case JsonTypeEnum.Dictionary: return "System.Collections.Generic.Dictionary<string, " + InternalType.GetCSharpType() + ">";
+                case JsonTypeEnum.Array: return useLists ? "IList<" + InternalType.GetCSharpType(useLists) + ">" : InternalType.GetCSharpType(useLists) + "[]";
+                case JsonTypeEnum.Dictionary: return "Dictionary<string, " + InternalType.GetCSharpType(useLists) + ">";
                 case JsonTypeEnum.Boolean: return "bool";
                 case JsonTypeEnum.Float: return "double";
                 case JsonTypeEnum.Integer: return "int";
@@ -190,7 +190,7 @@ namespace JsonCSharpClassGenerator
                 case JsonTypeEnum.NullableSomething: return "object";
                 case JsonTypeEnum.Object: return AssignedName;
                 case JsonTypeEnum.String: return "string";
-                 default: throw new System.NotSupportedException("Unsupported json type");
+                default: throw new System.NotSupportedException("Unsupported json type");
             }
         }
 
@@ -302,10 +302,10 @@ namespace JsonCSharpClassGenerator
                     break;
                 case JsonTypeEnum.Dictionary:
                     throw new ArgumentException();
-                    //if (IsNull(type2)) return type1;
-                    //if (type2 == JsonTypeEnum.Object) return type1;
-                    //if (type2 == JsonTypeEnum.Dictionary) return type1;
-                  //  break;
+                //if (IsNull(type2)) return type1;
+                //if (type2 == JsonTypeEnum.Object) return type1;
+                //if (type2 == JsonTypeEnum.Dictionary) return type1;
+                //  break;
                 case JsonTypeEnum.Array:
                     if (IsNull(type2)) return type1;
                     if (type2 == JsonTypeEnum.Array) return type1;

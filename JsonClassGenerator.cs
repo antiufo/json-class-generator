@@ -188,6 +188,7 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine("// http://at-my-window.blogspot.com/?page=json-class-generator");
                 sw.WriteLine();
                 sw.WriteLine("using System;");
+                sw.WriteLine("using System.Collections.Generic;");
                 if (!ExplicitDeserialization && UsePascalCase)
                     sw.WriteLine("using Newtonsoft.Json;");
                 sw.WriteLine("using Newtonsoft.Json.Linq;");
@@ -304,7 +305,7 @@ namespace JsonCSharpClassGenerator
 
             foreach (var field in fields)
             {
-                sw.WriteLine("        public readonly {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+                sw.WriteLine("        public readonly {0} {1};", field.Type.GetCSharpType(false), field.MemberName);
             }
 
 
@@ -335,11 +336,11 @@ namespace JsonCSharpClassGenerator
 
                 if (UseProperties)
                 {
-                    sw.WriteLine("        public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine("        public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(true), field.MemberName);
                 }
                 else
                 {
-                    sw.WriteLine("        public {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine("        public {0} {1};", field.Type.GetCSharpType(true), field.MemberName);
                 }
             }
 
@@ -371,11 +372,11 @@ namespace JsonCSharpClassGenerator
                 {
                     variable = "_" + char.ToLower(field.MemberName[0]) + field.MemberName.Substring(1);
                     sw.WriteLine("        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]");
-                    sw.WriteLine("        private {0} {1};", field.Type.GetCSharpType(), variable);
+                    sw.WriteLine("        private {0} {1};", field.Type.GetCSharpType(false), variable);
                 }
 
 
-                sw.WriteLine("        public {0} {1}", field.Type.GetCSharpType(), field.MemberName);
+                sw.WriteLine("        public {0} {1}", field.Type.GetCSharpType(false), field.MemberName);
                 sw.WriteLine("        {");
                 sw.WriteLine("            get");
                 sw.WriteLine("            {");
