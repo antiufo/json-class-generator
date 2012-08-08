@@ -190,7 +190,16 @@ namespace JsonCSharpClassGenerator
 
             var shouldSuppressWarning = InternalVisibility && !UseProperties && !ExplicitDeserialization;
 
-            using (var sw = new StreamWriter(Path.Combine(TargetFolder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + ".cs"), false, Encoding.UTF8))
+            var folder = TargetFolder;
+            if (!UseNestedClasses && !isRoot && SecondaryNamespace != null)
+            {
+                var s = SecondaryNamespace;
+                if (s.StartsWith(Namespace + ".")) s = s.Substring(Namespace.Length + 1);
+                folder = Path.Combine(folder, s);
+                Directory.CreateDirectory(folder);
+            }
+
+            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + ".cs"), false, Encoding.UTF8))
             {
 
                 sw.WriteLine("// JSON C# Class Generator");

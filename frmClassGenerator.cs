@@ -167,9 +167,9 @@ namespace JsonCSharpClassGenerator
             chkNoHelper.Enabled = chkExplicitDeserialization.Checked;
 
 
-            if (edtSecondaryNamespace.Text.EndsWith(".JsonTypes") || edtSecondaryNamespace.Text == string.Empty)
+            if (edtSecondaryNamespace.Text.Contains("JsonTypes") || edtSecondaryNamespace.Text == string.Empty)
             {
-                edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + ".JsonTypes";
+                edtSecondaryNamespace.Text = edtNamespace.Text == string.Empty ? string.Empty : edtNamespace.Text + "." + edtMainClass.Text + "JsonTypes";
             }
 
             if (radDifferentNamespace.Checked)
@@ -194,6 +194,11 @@ namespace JsonCSharpClassGenerator
         }
 
         private void radDifferentNamespace_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void edtMainClass_TextChanged(object sender, EventArgs e)
         {
             UpdateStatus();
         }
