@@ -228,7 +228,7 @@
             this.edtSecondaryNamespace.Location = new System.Drawing.Point(30, 72);
             this.edtSecondaryNamespace.Margin = new System.Windows.Forms.Padding(30, 3, 3, 3);
             this.edtSecondaryNamespace.Name = "edtSecondaryNamespace";
-            this.edtSecondaryNamespace.Size = new System.Drawing.Size(151, 20);
+            this.edtSecondaryNamespace.Size = new System.Drawing.Size(219, 20);
             this.edtSecondaryNamespace.TabIndex = 5;
             this.edtSecondaryNamespace.Text = "MyProject.JsonTypes";
             // 
@@ -317,7 +317,7 @@
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(33, 109);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(200, 100);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(267, 100);
             this.flowLayoutPanel3.TabIndex = 34;
             this.flowLayoutPanel3.WrapContents = false;
             // 
@@ -355,6 +355,7 @@
             this.edtMainClass.Size = new System.Drawing.Size(185, 20);
             this.edtMainClass.TabIndex = 1;
             this.edtMainClass.Text = global::JsonCSharpClassGenerator.Properties.Settings.Default.MainClassName;
+            this.edtMainClass.TextChanged += new System.EventHandler(this.edtMainClass_TextChanged);
             // 
             // edtTargetFolder
             // 
