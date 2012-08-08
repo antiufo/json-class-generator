@@ -109,7 +109,7 @@ namespace JsonCSharpClassGenerator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RootObject")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SampleResponse1")]
         public string MainClassName {
             get {
                 return ((string)(this["MainClassName"]));

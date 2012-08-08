@@ -24,7 +24,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MainClassName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RootObject</Value>
+      <Value Profile="(Default)">SampleResponse1</Value>
     </Setting>
     <Setting Name="UsePascalCase" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
