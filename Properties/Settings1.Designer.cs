@@ -154,5 +154,17 @@ namespace JsonCSharpClassGenerator.Properties {
                 this["NamespaceStrategy"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ApplyObfuscationAttributes {
+            get {
+                return ((bool)(this["ApplyObfuscationAttributes"]));
+            }
+            set {
+                this["ApplyObfuscationAttributes"] = value;
+            }
+        }
     }
 }
