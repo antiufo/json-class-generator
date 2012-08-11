@@ -50,6 +50,7 @@ namespace JsonCSharpClassGenerator
         public string MainClass;
         public bool UsePascalCase;
         public bool UseNestedClasses;
+        public bool ApplyObfuscationAttributes;
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
@@ -96,6 +97,8 @@ namespace JsonCSharpClassGenerator
             var fields = new Dictionary<string, JsonType>();
 
             var first = true;
+            var applyNoRenamingAttribute = ApplyObfuscationAttributes && !ExplicitDeserialization && !UsePascalCase;
+            var applyNoPruneAttribute = ApplyObfuscationAttributes && !ExplicitDeserialization && UseProperties;
             foreach (var obj in examples)
             {
                 foreach (var prop in obj.Properties())
@@ -207,6 +210,8 @@ namespace JsonCSharpClassGenerator
                 sw.WriteLine();
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Collections.Generic;");
+                if (applyNoRenamingAttribute || applyNoPruneAttribute)
+                    sw.WriteLine("using System.Reflection;");
                 if (!ExplicitDeserialization && UsePascalCase)
                     sw.WriteLine("using Newtonsoft.Json;");
                 sw.WriteLine("using Newtonsoft.Json.Linq;");
@@ -227,12 +232,16 @@ namespace JsonCSharpClassGenerator
                     sw.WriteLine("    {");
                     if (!isRoot)
                     {
+                        if (applyNoRenamingAttribute) sw.WriteLine("        " + NoRenameAttribute);
+                        if (applyNoPruneAttribute) sw.WriteLine("        " + NoPruneAttribute);
                         sw.WriteLine("        {0} class {1}", Visibility, className);
                         sw.WriteLine("        {");
                     }
                 }
                 else
                 {
+                    if (applyNoRenamingAttribute) sw.WriteLine("    " + NoRenameAttribute);
+                    if (applyNoPruneAttribute) sw.WriteLine("    " + NoPruneAttribute);
                     sw.WriteLine("    {0} class {1}", Visibility, className);
                     sw.WriteLine("    {");
                 }
@@ -284,6 +293,8 @@ namespace JsonCSharpClassGenerator
         }
 
         private HashSet<string> GeneratedNames = new HashSet<string>();
+        private const string NoRenameAttribute = "[Obfuscation(Feature = \"renaming\", Exclude = true)]";
+        private const string NoPruneAttribute = "[Obfuscation(Feature = \"trigger\", Exclude = false)]";
 
         private string CreateName(string name)
         {

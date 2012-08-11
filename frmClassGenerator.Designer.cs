@@ -53,6 +53,7 @@
             this.radDifferentNamespace = new System.Windows.Forms.RadioButton();
             this.radNestedClasses = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.chkApplyObfuscationAttributes = new System.Windows.Forms.CheckBox();
             this.chkExplicitDeserialization = new System.Windows.Forms.CheckBox();
             this.chkPascalCase = new System.Windows.Forms.CheckBox();
             this.edtMainClass = new System.Windows.Forms.TextBox();
@@ -80,18 +81,18 @@
             this.edtJson.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.edtJson.Location = new System.Drawing.Point(15, 244);
+            this.edtJson.Location = new System.Drawing.Point(15, 250);
             this.edtJson.MaxLength = 10000000;
             this.edtJson.Multiline = true;
             this.edtJson.Name = "edtJson";
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.edtJson.Size = new System.Drawing.Size(680, 279);
+            this.edtJson.Size = new System.Drawing.Size(680, 273);
             this.edtJson.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 228);
+            this.label1.Location = new System.Drawing.Point(12, 234);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(199, 13);
             this.label1.TabIndex = 9;
@@ -321,6 +322,18 @@
             this.flowLayoutPanel3.TabIndex = 34;
             this.flowLayoutPanel3.WrapContents = false;
             // 
+            // chkApplyObfuscationAttributes
+            // 
+            this.chkApplyObfuscationAttributes.AutoSize = true;
+            this.chkApplyObfuscationAttributes.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.ApplyObfuscationAttributes;
+            this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkApplyObfuscationAttributes.Location = new System.Drawing.Point(349, 211);
+            this.chkApplyObfuscationAttributes.Name = "chkApplyObfuscationAttributes";
+            this.chkApplyObfuscationAttributes.Size = new System.Drawing.Size(203, 17);
+            this.chkApplyObfuscationAttributes.TabIndex = 35;
+            this.chkApplyObfuscationAttributes.Text = "Apply obfuscation exclusion attributes";
+            this.chkApplyObfuscationAttributes.UseVisualStyleBackColor = true;
+            // 
             // chkExplicitDeserialization
             // 
             this.chkExplicitDeserialization.AutoSize = true;
@@ -396,6 +409,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.chkApplyObfuscationAttributes);
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.chkExplicitDeserialization);
@@ -466,6 +480,7 @@
         private System.Windows.Forms.RadioButton radDifferentNamespace;
         private System.Windows.Forms.RadioButton radNestedClasses;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.CheckBox chkApplyObfuscationAttributes;
     }
 }
 

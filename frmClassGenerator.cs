@@ -143,6 +143,7 @@ namespace JsonCSharpClassGenerator
             gen.MainClass = edtMainClass.Text;
             gen.UsePascalCase = chkPascalCase.Checked;
             gen.UseNestedClasses = radNestedClasses.Checked;
+            gen.ApplyObfuscationAttributes = chkApplyObfuscationAttributes.Checked;
             try
             {
                 gen.GenerateClasses();
