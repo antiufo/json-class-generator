@@ -46,7 +46,7 @@
             this.btnOK.Location = new System.Drawing.Point(358, 181);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 3;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -56,7 +56,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(23, 124);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(264, 13);
-            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "http://www.xamasoft.com/json-csharp-class-generator";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
@@ -82,10 +82,10 @@
             // btnSendFeedback
             // 
             this.btnSendFeedback.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendFeedback.Location = new System.Drawing.Point(239, 181);
+            this.btnSendFeedback.Location = new System.Drawing.Point(257, 181);
             this.btnSendFeedback.Name = "btnSendFeedback";
             this.btnSendFeedback.Size = new System.Drawing.Size(95, 23);
-            this.btnSendFeedback.TabIndex = 5;
+            this.btnSendFeedback.TabIndex = 2;
             this.btnSendFeedback.Text = "Send feedback";
             this.btnSendFeedback.UseVisualStyleBackColor = true;
             this.btnSendFeedback.Click += new System.EventHandler(this.btnSendFeedback_Click);
@@ -96,7 +96,7 @@
             this.btnCheckUpdates.Location = new System.Drawing.Point(26, 181);
             this.btnCheckUpdates.Name = "btnCheckUpdates";
             this.btnCheckUpdates.Size = new System.Drawing.Size(119, 23);
-            this.btnCheckUpdates.TabIndex = 6;
+            this.btnCheckUpdates.TabIndex = 1;
             this.btnCheckUpdates.Text = "Check for updates";
             this.btnCheckUpdates.UseVisualStyleBackColor = true;
             this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
