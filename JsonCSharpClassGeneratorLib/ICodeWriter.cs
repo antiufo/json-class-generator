@@ -11,10 +11,10 @@ namespace Xamasoft.JsonClassGenerator
         string FileExtension { get; }
         string DisplayName { get; }
         string GetTypeName(JsonType type, IJsonClassGeneratorConfig config);
-        void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type);
-        void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw);
-        void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw);
-        void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root);
-        void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root);
+        void WriteClass(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type);
+        void WriteFileStart(IJsonClassGeneratorConfig config, TextWriter sw);
+        void WriteFileEnd(IJsonClassGeneratorConfig config, TextWriter sw);
+        void WriteNamespaceStart(IJsonClassGeneratorConfig config, TextWriter sw, bool root);
+        void WriteNamespaceEnd(IJsonClassGeneratorConfig config, TextWriter sw, bool root);
     }
 }

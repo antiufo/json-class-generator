@@ -47,7 +47,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.edtSecondaryNamespace = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnPaste = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.radSameNamespace = new System.Windows.Forms.RadioButton();
             this.radDifferentNamespace = new System.Windows.Forms.RadioButton();
@@ -67,6 +66,8 @@
             this.lblDone = new System.Windows.Forms.Label();
             this.lnkOpenFolder = new Xamasoft.Controls.BetterLinkLabel();
             this.messageTimer = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.lblDoneClipboard = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -249,17 +250,6 @@
             this.label5.Size = new System.Drawing.Size(89, 13);
             this.label5.TabIndex = 25;
             this.label5.Text = "Main class name:";
-            // 
-            // btnPaste
-            // 
-            this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPaste.Location = new System.Drawing.Point(458, 529);
-            this.btnPaste.Name = "btnPaste";
-            this.btnPaste.Size = new System.Drawing.Size(75, 23);
-            this.btnPaste.TabIndex = 16;
-            this.btnPaste.Text = "Paste";
-            this.btnPaste.UseVisualStyleBackColor = true;
-            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // label6
             // 
@@ -447,7 +437,7 @@
             this.lblDone.AutoSize = true;
             this.lblDone.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDone.ForeColor = System.Drawing.Color.Green;
-            this.lblDone.Location = new System.Drawing.Point(346, 534);
+            this.lblDone.Location = new System.Drawing.Point(319, 534);
             this.lblDone.Name = "lblDone";
             this.lblDone.Size = new System.Drawing.Size(39, 13);
             this.lblDone.TabIndex = 38;
@@ -458,7 +448,7 @@
             // 
             this.lnkOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkOpenFolder.AutoSize = true;
-            this.lnkOpenFolder.Location = new System.Drawing.Point(390, 534);
+            this.lnkOpenFolder.Location = new System.Drawing.Point(364, 534);
             this.lnkOpenFolder.Name = "lnkOpenFolder";
             this.lnkOpenFolder.Size = new System.Drawing.Size(62, 13);
             this.lnkOpenFolder.TabIndex = 39;
@@ -472,13 +462,39 @@
             this.messageTimer.Interval = 7000;
             this.messageTimer.Tick += new System.EventHandler(this.messageTimer_Tick);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(437, 529);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(96, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Paste && go (F9)";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnPasteAndGo_Click);
+            // 
+            // lblDoneClipboard
+            // 
+            this.lblDoneClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDoneClipboard.AutoSize = true;
+            this.lblDoneClipboard.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDoneClipboard.ForeColor = System.Drawing.Color.Green;
+            this.lblDoneClipboard.Location = new System.Drawing.Point(243, 534);
+            this.lblDoneClipboard.Name = "lblDoneClipboard";
+            this.lblDoneClipboard.Size = new System.Drawing.Size(183, 13);
+            this.lblDoneClipboard.TabIndex = 38;
+            this.lblDoneClipboard.Text = "Done! Classes copied to clipboard";
+            this.lblDoneClipboard.Visible = false;
+            // 
             // frmCSharpClassGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lnkOpenFolder);
+            this.Controls.Add(this.lblDoneClipboard);
             this.Controls.Add(this.lblDone);
             this.Controls.Add(this.chkSingleFile);
             this.Controls.Add(this.lblLanguage);
@@ -487,7 +503,6 @@
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.chkExplicitDeserialization);
-            this.Controls.Add(this.btnPaste);
             this.Controls.Add(this.chkPascalCase);
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.label5);
@@ -549,7 +564,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.CheckBox chkPascalCase;
-        private System.Windows.Forms.Button btnPaste;
         private System.Windows.Forms.CheckBox chkExplicitDeserialization;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RadioButton radSameNamespace;
@@ -563,6 +577,8 @@
         private System.Windows.Forms.Label lblDone;
         private Xamasoft.Controls.BetterLinkLabel lnkOpenFolder;
         private System.Windows.Forms.Timer messageTimer;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblDoneClipboard;
     }
 }
 
