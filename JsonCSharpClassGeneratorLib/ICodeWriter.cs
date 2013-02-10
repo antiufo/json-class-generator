@@ -10,6 +10,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
     {
         string FileExtension { get; }
         string GetTypeName(JsonType type, IJsonClassGeneratorConfig config);
-        void WriteClass(StreamWriter sw, IJsonClassGeneratorConfig config, string className, FieldInfo[] fields, bool isRoot, bool hasSecondaryClasses);
+        void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, bool hasSecondaryClasses);
     }
 }

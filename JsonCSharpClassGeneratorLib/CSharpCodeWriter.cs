@@ -45,7 +45,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
         }
 
 
-        public void WriteClass(StreamWriter sw, IJsonClassGeneratorConfig config, string className, FieldInfo[] fields, bool isRoot, bool hasSecondaryClasses)
+        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, bool hasSecondaryClasses)
         {
             var visibility = config.InternalVisibility ? "internal" : "public";
             var applyNoRenamingAttribute = config.ApplyObfuscationAttributes && !config.ExplicitDeserialization && !config.UsePascalCase;
@@ -102,16 +102,16 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 if (!config.UsePascalCase) sw.WriteLine();
             }
 
-            if (isRoot && config.ExplicitDeserialization) WriteStringConstructor(sw, className, prefix, config);
+            if (isRoot && config.ExplicitDeserialization) WriteStringConstructorExplicitDeserialization(config, sw, className, prefix);
 
             if (config.ExplicitDeserialization)
             {
-                if (config.UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fields, isRoot, prefix);
-                else WriteClassWithFieldsExplicitDeserialization(sw, className, fields, isRoot, prefix);
+                if (config.UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fields, prefix, isRoot);
+                else WriteClassWithFieldsExplicitDeserialization(sw, className, fields, prefix, isRoot);
             }
             else
             {
-                WriteClassMembers(sw, fields, prefix, config);
+                WriteClassMembers(config, sw, fields, prefix);
             }
 
             if (shouldSuppressWarning)
@@ -135,46 +135,9 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
 
 
-        private void WriteStringConstructor(StreamWriter sw, string className, string prefix, IJsonClassGeneratorConfig config)
-        {
-            sw.WriteLine();
-            sw.WriteLine(prefix + "public {1}(string json)", config.InternalVisibility ? "internal" : "public", className);
-            sw.WriteLine(prefix + "    : this(JObject.Parse(json))");
-            sw.WriteLine(prefix + "{");
-            sw.WriteLine(prefix + "}");
-            sw.WriteLine();
-        }
-
-        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
-        {
 
 
-            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
-            sw.WriteLine(prefix + "{");
-
-            foreach (var field in fields)
-            {
-                sw.WriteLine(prefix + "    this.{0} = {1};", field.MemberName, field.GetGenerationCode("obj"));
-
-            }
-
-            sw.WriteLine(prefix + "}");
-            sw.WriteLine();
-
-
-
-            foreach (var field in fields)
-            {
-                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(), field.MemberName);
-            }
-
-
-
-        }
-
-
-
-        private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields, string prefix, IJsonClassGeneratorConfig config)
+        private void WriteClassMembers(IJsonClassGeneratorConfig config, StreamWriter sw, FieldInfo[] fields, string prefix)
         {
             foreach (var field in fields)
             {
@@ -202,8 +165,8 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
 
 
-
-        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
+        #region Code for (obsolete) explicit deserialization
+        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, string prefix, bool isRoot)
         {
 
             sw.WriteLine(prefix + "private JObject __jobject;");
@@ -248,6 +211,38 @@ namespace Xamasoft.JsonCSharpClassGenerator
         }
 
 
+        private void WriteStringConstructorExplicitDeserialization(IJsonClassGeneratorConfig config, StreamWriter sw, string className, string prefix)
+        {
+            sw.WriteLine();
+            sw.WriteLine(prefix + "public {1}(string json)", config.InternalVisibility ? "internal" : "public", className);
+            sw.WriteLine(prefix + "    : this(JObject.Parse(json))");
+            sw.WriteLine(prefix + "{");
+            sw.WriteLine(prefix + "}");
+            sw.WriteLine();
+        }
+
+        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, string prefix, bool isRoot)
+        {
+
+
+            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
+            sw.WriteLine(prefix + "{");
+
+            foreach (var field in fields)
+            {
+                sw.WriteLine(prefix + "    this.{0} = {1};", field.MemberName, field.GetGenerationCode("obj"));
+
+            }
+
+            sw.WriteLine(prefix + "}");
+            sw.WriteLine();
+
+            foreach (var field in fields)
+            {
+                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+            }
+        }
+        #region
 
     }
 }

@@ -163,7 +163,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
             using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + CodeWriter.FileExtension), false, Encoding.UTF8))
             {
-                CodeWriter.WriteClass(sw, this, className, fields, isRoot, hasSecondaryClasses);
+                CodeWriter.WriteClass(this, sw, className, fields, isRoot, hasSecondaryClasses);
             }
 
 
