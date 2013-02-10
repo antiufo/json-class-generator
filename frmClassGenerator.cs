@@ -8,11 +8,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Xamasoft.JsonCSharpClassGenerator.CodeWriters;
+using Xamasoft.JsonClassGenerator.CodeWriters;
 
 
 
-namespace Xamasoft.JsonCSharpClassGenerator.UI
+namespace Xamasoft.JsonClassGenerator.UI
 {
     public partial class frmCSharpClassGeneration : Form
     {

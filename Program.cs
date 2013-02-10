@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Xamasoft.JsonCSharpClassGenerator.UI
+namespace Xamasoft.JsonClassGenerator.UI
 {
     static class Program
     {

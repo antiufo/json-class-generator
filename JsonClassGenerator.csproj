@@ -8,7 +8,7 @@
     <ProjectGuid>{A7442683-2415-4DD4-9C52-824F7AF89ABC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamasoft.JsonCSharpClassGenerator.UI</RootNamespace>
+    <RootNamespace>Xamasoft.JsonClassGenerator.UI</RootNamespace>
     <AssemblyName>JsonCSharpClassGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -145,9 +145,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="JsonCSharpClassGeneratorLib\JsonCSharpClassGeneratorLib.csproj">
+    <ProjectReference Include="JsonCSharpClassGeneratorLib\JsonClassGeneratorLib.csproj">
       <Project>{7bef7eaa-de37-40fb-bd33-3def0685031f}</Project>
-      <Name>JsonCSharpClassGeneratorLib</Name>
+      <Name>JsonClassGeneratorLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

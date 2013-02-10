@@ -1,4 +1,4 @@
-﻿namespace Xamasoft.JsonCSharpClassGenerator.UI
+﻿namespace Xamasoft.JsonClassGenerator.UI
 {
     partial class frmCSharpClassGeneration
     {
@@ -46,7 +46,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.edtSecondaryNamespace = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.btnPaste = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.radSameNamespace = new System.Windows.Forms.RadioButton();
@@ -63,6 +62,7 @@
             this.chkNoHelper = new System.Windows.Forms.CheckBox();
             this.edtNamespace = new System.Windows.Forms.TextBox();
             this.chkSingleFile = new System.Windows.Forms.CheckBox();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -74,7 +74,7 @@
             this.btnGenerate.Location = new System.Drawing.Point(539, 529);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(75, 23);
-            this.btnGenerate.TabIndex = 10;
+            this.btnGenerate.TabIndex = 17;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
@@ -89,8 +89,8 @@
             this.edtJson.Multiline = true;
             this.edtJson.Name = "edtJson";
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.edtJson.Size = new System.Drawing.Size(680, 244);
-            this.edtJson.TabIndex = 9;
+            this.edtJson.Size = new System.Drawing.Size(680, 245);
+            this.edtJson.TabIndex = 14;
             // 
             // label1
             // 
@@ -98,7 +98,7 @@
             this.label1.Location = new System.Drawing.Point(12, 253);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(199, 13);
-            this.label1.TabIndex = 9;
+            this.label1.TabIndex = 6;
             this.label1.Text = "Generate C# classes from sample JSON:";
             // 
             // lblNamespace
@@ -117,7 +117,7 @@
             this.btnClose.Location = new System.Drawing.Point(620, 529);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 11;
+            this.btnClose.TabIndex = 18;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -137,7 +137,7 @@
             this.radFields.Location = new System.Drawing.Point(3, 26);
             this.radFields.Name = "radFields";
             this.radFields.Size = new System.Drawing.Size(52, 17);
-            this.radFields.TabIndex = 13;
+            this.radFields.TabIndex = 1;
             this.radFields.Text = "Fields";
             this.radFields.UseVisualStyleBackColor = true;
             // 
@@ -156,7 +156,7 @@
             this.radPublic.Location = new System.Drawing.Point(3, 26);
             this.radPublic.Name = "radPublic";
             this.radPublic.Size = new System.Drawing.Size(54, 17);
-            this.radPublic.TabIndex = 17;
+            this.radPublic.TabIndex = 1;
             this.radPublic.Text = "Public";
             this.radPublic.UseVisualStyleBackColor = true;
             // 
@@ -170,7 +170,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(363, 25);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(78, 46);
-            this.flowLayoutPanel1.TabIndex = 6;
+            this.flowLayoutPanel1.TabIndex = 7;
             // 
             // radProperties
             // 
@@ -194,7 +194,7 @@
             this.flowLayoutPanel2.Location = new System.Drawing.Point(363, 90);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(66, 46);
-            this.flowLayoutPanel2.TabIndex = 7;
+            this.flowLayoutPanel2.TabIndex = 8;
             // 
             // radInternal
             // 
@@ -233,7 +233,7 @@
             this.edtSecondaryNamespace.Margin = new System.Windows.Forms.Padding(30, 3, 3, 3);
             this.edtSecondaryNamespace.Name = "edtSecondaryNamespace";
             this.edtSecondaryNamespace.Size = new System.Drawing.Size(219, 20);
-            this.edtSecondaryNamespace.TabIndex = 5;
+            this.edtSecondaryNamespace.TabIndex = 3;
             this.edtSecondaryNamespace.Text = "Example.JsonTypes";
             // 
             // label5
@@ -245,24 +245,13 @@
             this.label5.TabIndex = 25;
             this.label5.Text = "Main class name:";
             // 
-            // btnAbout
-            // 
-            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.Image = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Resources.help;
-            this.btnAbout.Location = new System.Drawing.Point(669, 6);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(26, 24);
-            this.btnAbout.TabIndex = 26;
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
-            // 
             // btnPaste
             // 
             this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPaste.Location = new System.Drawing.Point(390, 529);
+            this.btnPaste.Location = new System.Drawing.Point(458, 529);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(75, 23);
-            this.btnPaste.TabIndex = 28;
+            this.btnPaste.TabIndex = 16;
             this.btnPaste.Text = "Paste";
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
@@ -282,7 +271,7 @@
             this.radSameNamespace.Location = new System.Drawing.Point(3, 26);
             this.radSameNamespace.Name = "radSameNamespace";
             this.radSameNamespace.Size = new System.Drawing.Size(148, 17);
-            this.radSameNamespace.TabIndex = 31;
+            this.radSameNamespace.TabIndex = 1;
             this.radSameNamespace.TabStop = true;
             this.radSameNamespace.Text = "Use the same namespace";
             this.radSameNamespace.UseVisualStyleBackColor = true;
@@ -294,7 +283,7 @@
             this.radDifferentNamespace.Location = new System.Drawing.Point(3, 49);
             this.radDifferentNamespace.Name = "radDifferentNamespace";
             this.radDifferentNamespace.Size = new System.Drawing.Size(152, 17);
-            this.radDifferentNamespace.TabIndex = 32;
+            this.radDifferentNamespace.TabIndex = 2;
             this.radDifferentNamespace.TabStop = true;
             this.radDifferentNamespace.Text = "Use a different namespace";
             this.radDifferentNamespace.UseVisualStyleBackColor = true;
@@ -306,7 +295,7 @@
             this.radNestedClasses.Location = new System.Drawing.Point(3, 3);
             this.radNestedClasses.Name = "radNestedClasses";
             this.radNestedClasses.Size = new System.Drawing.Size(117, 17);
-            this.radNestedClasses.TabIndex = 33;
+            this.radNestedClasses.TabIndex = 0;
             this.radNestedClasses.TabStop = true;
             this.radNestedClasses.Text = "Use nested classes";
             this.radNestedClasses.UseVisualStyleBackColor = true;
@@ -322,7 +311,7 @@
             this.flowLayoutPanel3.Location = new System.Drawing.Point(33, 134);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(267, 100);
-            this.flowLayoutPanel3.TabIndex = 34;
+            this.flowLayoutPanel3.TabIndex = 5;
             this.flowLayoutPanel3.WrapContents = false;
             // 
             // cmbLanguage
@@ -333,7 +322,7 @@
             this.cmbLanguage.Location = new System.Drawing.Point(115, 90);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(185, 21);
-            this.cmbLanguage.TabIndex = 36;
+            this.cmbLanguage.TabIndex = 4;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
             // lblLanguage
@@ -348,24 +337,24 @@
             // chkApplyObfuscationAttributes
             // 
             this.chkApplyObfuscationAttributes.AutoSize = true;
-            this.chkApplyObfuscationAttributes.Checked = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.ApplyObfuscationAttributes;
-            this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkApplyObfuscationAttributes.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.ApplyObfuscationAttributes;
+            this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkApplyObfuscationAttributes.Location = new System.Drawing.Point(349, 211);
             this.chkApplyObfuscationAttributes.Name = "chkApplyObfuscationAttributes";
             this.chkApplyObfuscationAttributes.Size = new System.Drawing.Size(203, 17);
-            this.chkApplyObfuscationAttributes.TabIndex = 35;
+            this.chkApplyObfuscationAttributes.TabIndex = 12;
             this.chkApplyObfuscationAttributes.Text = "Apply obfuscation exclusion attributes";
             this.chkApplyObfuscationAttributes.UseVisualStyleBackColor = true;
             // 
             // chkExplicitDeserialization
             // 
             this.chkExplicitDeserialization.AutoSize = true;
-            this.chkExplicitDeserialization.Checked = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.UseExplicitDeserialization;
-            this.chkExplicitDeserialization.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "UseExplicitDeserialization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkExplicitDeserialization.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.UseExplicitDeserialization;
+            this.chkExplicitDeserialization.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "UseExplicitDeserialization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkExplicitDeserialization.Location = new System.Drawing.Point(349, 165);
             this.chkExplicitDeserialization.Name = "chkExplicitDeserialization";
             this.chkExplicitDeserialization.Size = new System.Drawing.Size(198, 17);
-            this.chkExplicitDeserialization.TabIndex = 29;
+            this.chkExplicitDeserialization.TabIndex = 10;
             this.chkExplicitDeserialization.Text = "Use explicit deserialization (obsolete)";
             this.chkExplicitDeserialization.UseVisualStyleBackColor = true;
             this.chkExplicitDeserialization.CheckedChanged += new System.EventHandler(this.chkExplicitDeserialization_CheckedChanged);
@@ -373,57 +362,57 @@
             // chkPascalCase
             // 
             this.chkPascalCase.AutoSize = true;
-            this.chkPascalCase.Checked = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.UsePascalCase;
+            this.chkPascalCase.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.UsePascalCase;
             this.chkPascalCase.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPascalCase.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "UsePascalCase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkPascalCase.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "UsePascalCase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkPascalCase.Location = new System.Drawing.Point(349, 142);
             this.chkPascalCase.Name = "chkPascalCase";
             this.chkPascalCase.Size = new System.Drawing.Size(134, 17);
-            this.chkPascalCase.TabIndex = 27;
+            this.chkPascalCase.TabIndex = 9;
             this.chkPascalCase.Text = "Convert to PascalCase";
             this.chkPascalCase.UseVisualStyleBackColor = true;
             // 
             // edtMainClass
             // 
-            this.edtMainClass.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "MainClassName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtMainClass.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "MainClassName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtMainClass.Location = new System.Drawing.Point(115, 37);
             this.edtMainClass.Name = "edtMainClass";
             this.edtMainClass.Size = new System.Drawing.Size(185, 20);
             this.edtMainClass.TabIndex = 1;
-            this.edtMainClass.Text = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.MainClassName;
+            this.edtMainClass.Text = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.MainClassName;
             this.edtMainClass.TextChanged += new System.EventHandler(this.edtMainClass_TextChanged);
             // 
             // edtTargetFolder
             // 
             this.edtTargetFolder.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.edtTargetFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.edtTargetFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "TargetFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtTargetFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "TargetFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtTargetFolder.Location = new System.Drawing.Point(115, 65);
             this.edtTargetFolder.Name = "edtTargetFolder";
             this.edtTargetFolder.Size = new System.Drawing.Size(155, 20);
             this.edtTargetFolder.TabIndex = 2;
-            this.edtTargetFolder.Text = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.TargetFolder;
+            this.edtTargetFolder.Text = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.TargetFolder;
             // 
             // chkNoHelper
             // 
             this.chkNoHelper.AutoSize = true;
-            this.chkNoHelper.Checked = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.NoHelper;
-            this.chkNoHelper.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "NoHelper", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkNoHelper.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.NoHelper;
+            this.chkNoHelper.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "NoHelper", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkNoHelper.Location = new System.Drawing.Point(366, 188);
             this.chkNoHelper.Name = "chkNoHelper";
             this.chkNoHelper.Size = new System.Drawing.Size(162, 17);
-            this.chkNoHelper.TabIndex = 8;
+            this.chkNoHelper.TabIndex = 11;
             this.chkNoHelper.Text = "Do not generate helper class";
             this.chkNoHelper.UseVisualStyleBackColor = true;
             // 
             // edtNamespace
             // 
-            this.edtNamespace.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default, "Namespace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtNamespace.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "Namespace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtNamespace.Location = new System.Drawing.Point(115, 9);
             this.edtNamespace.Name = "edtNamespace";
             this.edtNamespace.Size = new System.Drawing.Size(185, 20);
             this.edtNamespace.TabIndex = 0;
-            this.edtNamespace.Text = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.Namespace;
+            this.edtNamespace.Text = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.Namespace;
             this.edtNamespace.TextChanged += new System.EventHandler(this.edtNamespace_TextChanged);
             // 
             // chkSingleFile
@@ -432,9 +421,20 @@
             this.chkSingleFile.Location = new System.Drawing.Point(349, 235);
             this.chkSingleFile.Name = "chkSingleFile";
             this.chkSingleFile.Size = new System.Drawing.Size(125, 17);
-            this.chkSingleFile.TabIndex = 38;
+            this.chkSingleFile.TabIndex = 13;
             this.chkSingleFile.Text = "Generate a single file";
             this.chkSingleFile.UseVisualStyleBackColor = true;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAbout.Location = new System.Drawing.Point(15, 529);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(75, 23);
+            this.btnAbout.TabIndex = 15;
+            this.btnAbout.Text = "About...";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // frmCSharpClassGeneration
             // 
@@ -469,8 +469,9 @@
             this.Controls.Add(this.edtJson);
             this.Controls.Add(this.btnGenerate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(671, 444);
             this.Name = "frmCSharpClassGeneration";
-            this.Text = "JSON C# Class Generator";
+            this.Text = "Xamasoft JSON Class Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCSharpClassGeneration_FormClosing);
             this.Load += new System.EventHandler(this.frmCSharpClassGeneration_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
