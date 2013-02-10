@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Xamasoft.JsonCSharpClassGenerator.CodeWriters;
 
 
 
@@ -59,6 +60,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             {
                 settings.SecondaryNamespace = string.Empty;
             }
+            settings.Language = cmbLanguage.SelectedItem.GetType().Name;
             settings.Save();
         }
 
@@ -71,8 +73,16 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             if (settings.NamespaceStrategy == 0) radNestedClasses.Checked = true;
             else if (settings.NamespaceStrategy == 1) radSameNamespace.Checked = true;
             else radDifferentNamespace.Checked = true;
+            cmbLanguage.Items.AddRange(CodeWriters);
+            var langIndex = CodeWriters.ToList().FindIndex(x => x.GetType().Name == settings.Language);
+            cmbLanguage.SelectedIndex = langIndex != -1 ? langIndex : 0;
             UpdateStatus();
         }
+
+        private readonly static ICodeWriter[] CodeWriters = new ICodeWriter[] {
+            new CSharpCodeWriter(),
+            new VisualBasicCodeWriter()
+        };
 
         private void edtNamespace_TextChanged(object sender, EventArgs e)
         {
@@ -111,7 +121,8 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             var gen = new JsonClassGenerator();
             gen.Example = edtJson.Text;
             gen.InternalVisibility = radInternal.Checked;
-            gen.ExplicitDeserialization = chkExplicitDeserialization.Checked;
+            gen.CodeWriter = (ICodeWriter)cmbLanguage.SelectedItem;
+            gen.ExplicitDeserialization = chkExplicitDeserialization.Checked && gen.CodeWriter is CSharpCodeWriter;
             gen.Namespace = edtNamespace.Text;
             gen.NoHelperClass = chkNoHelper.Checked;
             gen.SecondaryNamespace = radDifferentNamespace.Checked ? edtSecondaryNamespace.Text : null;
@@ -152,7 +163,6 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
 
         private void UpdateStatus()
         {
-            chkNoHelper.Enabled = chkExplicitDeserialization.Checked;
 
 
             if (edtSecondaryNamespace.Text.Contains("JsonTypes") || edtSecondaryNamespace.Text == string.Empty)
@@ -161,6 +171,11 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             }
 
             edtSecondaryNamespace.Enabled = radDifferentNamespace.Checked;
+
+            var writer = (ICodeWriter)cmbLanguage.SelectedItem;
+
+            chkExplicitDeserialization.Enabled = writer is CSharpCodeWriter;
+            chkNoHelper.Enabled = chkExplicitDeserialization.Enabled && chkExplicitDeserialization.Checked;
         }
 
         private void radNestedClasses_CheckedChanged(object sender, EventArgs e)
@@ -179,6 +194,11 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
         }
 
         private void edtMainClass_TextChanged(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateStatus();
         }

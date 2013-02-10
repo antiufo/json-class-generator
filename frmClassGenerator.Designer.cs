@@ -53,6 +53,8 @@
             this.radDifferentNamespace = new System.Windows.Forms.RadioButton();
             this.radNestedClasses = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.cmbLanguage = new System.Windows.Forms.ComboBox();
+            this.lblLanguage = new System.Windows.Forms.Label();
             this.chkApplyObfuscationAttributes = new System.Windows.Forms.CheckBox();
             this.chkExplicitDeserialization = new System.Windows.Forms.CheckBox();
             this.chkPascalCase = new System.Windows.Forms.CheckBox();
@@ -81,18 +83,18 @@
             this.edtJson.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.edtJson.Location = new System.Drawing.Point(15, 250);
+            this.edtJson.Location = new System.Drawing.Point(15, 279);
             this.edtJson.MaxLength = 10000000;
             this.edtJson.Multiline = true;
             this.edtJson.Name = "edtJson";
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.edtJson.Size = new System.Drawing.Size(680, 273);
+            this.edtJson.Size = new System.Drawing.Size(680, 244);
             this.edtJson.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 234);
+            this.label1.Location = new System.Drawing.Point(12, 253);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(199, 13);
             this.label1.TabIndex = 9;
@@ -267,7 +269,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 93);
+            this.label6.Location = new System.Drawing.Point(12, 118);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 13);
             this.label6.TabIndex = 30;
@@ -316,11 +318,31 @@
             this.flowLayoutPanel3.Controls.Add(this.radDifferentNamespace);
             this.flowLayoutPanel3.Controls.Add(this.edtSecondaryNamespace);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(33, 109);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(33, 134);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(267, 100);
             this.flowLayoutPanel3.TabIndex = 34;
             this.flowLayoutPanel3.WrapContents = false;
+            // 
+            // cmbLanguage
+            // 
+            this.cmbLanguage.DisplayMember = "DisplayName";
+            this.cmbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLanguage.FormattingEnabled = true;
+            this.cmbLanguage.Location = new System.Drawing.Point(115, 90);
+            this.cmbLanguage.Name = "cmbLanguage";
+            this.cmbLanguage.Size = new System.Drawing.Size(185, 21);
+            this.cmbLanguage.TabIndex = 36;
+            this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
+            // 
+            // lblLanguage
+            // 
+            this.lblLanguage.AutoSize = true;
+            this.lblLanguage.Location = new System.Drawing.Point(12, 93);
+            this.lblLanguage.Name = "lblLanguage";
+            this.lblLanguage.Size = new System.Drawing.Size(58, 13);
+            this.lblLanguage.TabIndex = 37;
+            this.lblLanguage.Text = "Language:";
             // 
             // chkApplyObfuscationAttributes
             // 
@@ -409,6 +431,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.lblLanguage);
+            this.Controls.Add(this.cmbLanguage);
             this.Controls.Add(this.chkApplyObfuscationAttributes);
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.label6);
@@ -481,6 +505,8 @@
         private System.Windows.Forms.RadioButton radNestedClasses;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.CheckBox chkApplyObfuscationAttributes;
+        private System.Windows.Forms.ComboBox cmbLanguage;
+        private System.Windows.Forms.Label lblLanguage;
     }
 }
 
