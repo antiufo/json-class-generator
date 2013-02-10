@@ -71,6 +71,9 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xamasoft.BetterLinkLabel">
+      <HintPath>References\Xamasoft.BetterLinkLabel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="frmAbout.cs">

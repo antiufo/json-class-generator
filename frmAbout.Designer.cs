@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             this.btnOK = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new Xamasoft.Controls.BetterLinkLabel();
             this.lblVersion = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSendFeedback = new System.Windows.Forms.Button();
@@ -144,7 +144,7 @@
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private Xamasoft.Controls.BetterLinkLabel linkLabel1;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSendFeedback;
