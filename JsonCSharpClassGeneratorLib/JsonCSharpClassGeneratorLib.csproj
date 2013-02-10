@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSharpCodeWriter.cs" />
     <Compile Include="FieldInfo.cs" />
+    <Compile Include="ICodeWriter.cs" />
+    <Compile Include="IJsonClassGeneratorConfig.cs" />
     <Compile Include="JsonClassGenerator.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
