@@ -7,8 +7,8 @@
     <ProjectGuid>{7BEF7EAA-DE37-40FB-BD33-3DEF0685031F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamasoft.JsonCSharpClassGenerator</RootNamespace>
-    <AssemblyName>Xamasoft.JsonCSharpClassGenerator</AssemblyName>
+    <RootNamespace>Xamasoft.JsonClassGenerator</RootNamespace>
+    <AssemblyName>Xamasoft.JsonClassGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿namespace Xamasoft.JsonCSharpClassGenerator.UI
+﻿namespace Xamasoft.JsonClassGenerator.UI
 {
     partial class frmAbout
     {
@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             this.btnOK = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lblVersion = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSendFeedback = new System.Windows.Forms.Button();
             this.btnCheckUpdates = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,27 +43,17 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOK.Location = new System.Drawing.Point(279, 157);
+            this.btnOK.Location = new System.Drawing.Point(358, 181);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(26, 24);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(241, 30);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(23, 118);
+            this.linkLabel1.Location = new System.Drawing.Point(23, 124);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(264, 13);
             this.linkLabel1.TabIndex = 2;
@@ -74,16 +64,16 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(23, 69);
+            this.lblVersion.Location = new System.Drawing.Point(23, 75);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(59, 13);
+            this.lblVersion.Size = new System.Drawing.Size(198, 13);
             this.lblVersion.TabIndex = 3;
-            this.lblVersion.Text = "Version {0}";
+            this.lblVersion.Text = "Version {0} - free for non-commercial use";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 92);
+            this.label1.Location = new System.Drawing.Point(23, 98);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(164, 13);
             this.label1.TabIndex = 4;
@@ -92,7 +82,7 @@
             // btnSendFeedback
             // 
             this.btnSendFeedback.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendFeedback.Location = new System.Drawing.Point(160, 157);
+            this.btnSendFeedback.Location = new System.Drawing.Point(239, 181);
             this.btnSendFeedback.Name = "btnSendFeedback";
             this.btnSendFeedback.Size = new System.Drawing.Size(95, 23);
             this.btnSendFeedback.TabIndex = 5;
@@ -102,13 +92,24 @@
             // 
             // btnCheckUpdates
             // 
-            this.btnCheckUpdates.Location = new System.Drawing.Point(26, 157);
+            this.btnCheckUpdates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCheckUpdates.Location = new System.Drawing.Point(26, 181);
             this.btnCheckUpdates.Name = "btnCheckUpdates";
             this.btnCheckUpdates.Size = new System.Drawing.Size(119, 23);
             this.btnCheckUpdates.TabIndex = 6;
             this.btnCheckUpdates.Text = "Check for updates";
             this.btnCheckUpdates.UseVisualStyleBackColor = true;
             this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Xamasoft.JsonClassGenerator.UI.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(-1, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(806, 63);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // frmAbout
             // 
@@ -117,7 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(366, 192);
+            this.ClientSize = new System.Drawing.Size(445, 216);
             this.Controls.Add(this.btnCheckUpdates);
             this.Controls.Add(this.btnSendFeedback);
             this.Controls.Add(this.label1);
@@ -131,7 +132,7 @@
             this.MinimizeBox = false;
             this.Name = "frmAbout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "About JSON C# Class Generator";
+            this.Text = "About Xamasoft JSON Class Generator";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

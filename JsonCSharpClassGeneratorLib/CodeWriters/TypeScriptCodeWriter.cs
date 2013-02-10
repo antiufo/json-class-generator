@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
+namespace Xamasoft.JsonClassGenerator.CodeWriters
 {
     public class TypeScriptCodeWriter : ICodeWriter
     {

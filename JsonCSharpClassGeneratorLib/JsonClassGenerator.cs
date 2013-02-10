@@ -9,10 +9,10 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
-using Xamasoft.JsonCSharpClassGenerator.CodeWriters;
+using Xamasoft.JsonClassGenerator.CodeWriters;
 
 
-namespace Xamasoft.JsonCSharpClassGenerator
+namespace Xamasoft.JsonClassGenerator
 {
     public class JsonClassGenerator : IJsonClassGeneratorConfig
     {
