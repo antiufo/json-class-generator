@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Xamasoft.JsonCSharpClassGenerator.Properties {
+namespace Xamasoft.JsonCSharpClassGenerator.UI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

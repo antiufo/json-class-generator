@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Xamasoft.JsonCSharpClassGenerator
 {
-    enum JsonTypeEnum
+    public enum JsonTypeEnum
     {
         Anything,
         String,

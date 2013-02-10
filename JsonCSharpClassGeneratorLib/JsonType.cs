@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace Xamasoft.JsonCSharpClassGenerator
 {
-    class JsonType
+    public class JsonType
     {
 
 
@@ -99,14 +99,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 return string.Format("Read{0}", Enum.GetName(typeof(JsonTypeEnum), Type));
             }
         }
-
-
-        //public int CountDimensions()
-        //{
-        //    if (Type != JsonTypeEnum.Array) throw new InvalidOperationException();
-        //    if (InternalType.Type != JsonTypeEnum.Array) return 1;
-        //    return 1 + InternalType.CountDimensions();
-        //}
 
         public JsonType GetInnermostType()
         {

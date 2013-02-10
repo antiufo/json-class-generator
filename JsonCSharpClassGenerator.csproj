@@ -8,7 +8,7 @@
     <ProjectGuid>{A7442683-2415-4DD4-9C52-824F7AF89ABC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamasoft.JsonCSharpClassGenerator</RootNamespace>
+    <RootNamespace>Xamasoft.JsonCSharpClassGenerator.UI</RootNamespace>
     <AssemblyName>JsonCSharpClassGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -73,7 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FieldInfo.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,10 +85,6 @@
     <Compile Include="frmClassGenerator.Designer.cs">
       <DependentUpon>frmClassGenerator.cs</DependentUpon>
     </Compile>
-    <Compile Include="JsonClassGenerator.cs" />
-    <None Include="JsonClassHelper.cs" />
-    <Compile Include="JsonType.cs" />
-    <Compile Include="JsonTypeEnum.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,6 +143,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="JsonCSharpClassGeneratorLib\JsonCSharpClassGeneratorLib.csproj">
+      <Project>{7bef7eaa-de37-40fb-bd33-3def0685031f}</Project>
+      <Name>JsonCSharpClassGeneratorLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
