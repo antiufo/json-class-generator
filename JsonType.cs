@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 
-namespace JsonCSharpClassGenerator
+namespace Xamasoft.JsonCSharpClassGenerator
 {
     class JsonType
     {
