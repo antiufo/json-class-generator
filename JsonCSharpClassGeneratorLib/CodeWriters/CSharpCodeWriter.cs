@@ -4,13 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Xamasoft.JsonCSharpClassGenerator
+namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 {
     public class CSharpCodeWriter : ICodeWriter
     {
         public string FileExtension
         {
             get { return ".cs"; }
+        }
+
+        public string DisplayName
+        {
+            get { return "C#"; }
         }
 
 
@@ -242,7 +247,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(), field.MemberName);
             }
         }
-        #region
+        #endregion
 
     }
 }

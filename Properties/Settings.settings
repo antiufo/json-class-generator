@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="JsonCSharpClassGenerator.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Xamasoft.JsonCSharpClassGenerator.UI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="Namespace" Type="System.String" Scope="User">
@@ -37,6 +37,9 @@
     </Setting>
     <Setting Name="ApplyObfuscationAttributes" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CSharpCodeWriter</Value>
     </Setting>
   </Settings>
 </SettingsFile>
