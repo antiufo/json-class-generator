@@ -23,12 +23,12 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             throw new NotImplementedException();
         }
 
-        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type)
+        public void WriteClass(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileStart(IJsonClassGeneratorConfig config, TextWriter sw)
         {
             foreach (var line in JsonClassGenerator.FileHeader)
             {
@@ -36,17 +36,17 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             }
         }
 
-        public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileEnd(IJsonClassGeneratorConfig config, TextWriter sw)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
             throw new NotImplementedException();
         }

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -98,26 +99,86 @@ namespace Xamasoft.JsonClassGenerator.UI
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            if (edtJson.Text == string.Empty)
-            {
-                MessageBox.Show(this, "Please insert some sample JSON.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                edtJson.Focus();
-                return;
-            }
+            HideCompletionMessage();
             if (edtTargetFolder.Text == string.Empty)
             {
                 MessageBox.Show(this, "Please specify an output directory.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            var gen = Prepare();
+            if (gen == null) return;
+            try
+            {
+                gen.GenerateClasses();
+                messageTimer.Stop();
+                lblDone.Visible = true;
+                lnkOpenFolder.Visible = true;
+                messageTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string lastGeneratedString;
+
+        private void PasteAndGo()
+        {
+            HideCompletionMessage();
+            var jsonClipboard = Clipboard.GetText(TextDataFormat.UnicodeText | TextDataFormat.Text);
+            if (jsonClipboard != lastGeneratedString)
+            {
+                var jsonClipboardTrimmed = jsonClipboard.Trim();
+                var jsonTextboxTrimmed = edtJson.Text.Trim();
+                if (
+                    (jsonClipboardTrimmed.StartsWith("{") || jsonClipboardTrimmed.StartsWith("[")) ||
+                    !(jsonTextboxTrimmed.StartsWith("{") || jsonTextboxTrimmed.StartsWith("[")))
+                    edtJson.Text = jsonClipboard;
+            }
+            var gen = Prepare();
+            if (gen == null) return;
+            try
+            {
+                gen.TargetFolder = null;
+                gen.SingleFile = true;
+                using (var sw = new StringWriter())
+                {
+                    gen.OutputStream = sw;
+                    gen.GenerateClasses();
+                    sw.Flush();
+                    lastGeneratedString = sw.ToString();
+                    Clipboard.SetText(lastGeneratedString);
+                }
+                messageTimer.Stop();
+                lblDoneClipboard.Visible = true;
+                messageTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private JsonClassGenerator Prepare()
+        {
+            if (edtJson.Text == string.Empty)
+            {
+                MessageBox.Show(this, "Please insert some sample JSON.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                edtJson.Focus();
+                return null;
+            }
+
             if (edtNamespace.Text == string.Empty)
             {
                 MessageBox.Show(this, "Please specify a namespace.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return null;
             }
             if (edtMainClass.Text == string.Empty)
             {
                 MessageBox.Show(this, "Please specify a main class name.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return null;
             }
 
             var gen = new JsonClassGenerator();
@@ -135,19 +196,10 @@ namespace Xamasoft.JsonClassGenerator.UI
             gen.UseNestedClasses = radNestedClasses.Checked;
             gen.ApplyObfuscationAttributes = chkApplyObfuscationAttributes.Checked;
             gen.SingleFile = chkSingleFile.Checked;
-            try
-            {
-                gen.GenerateClasses();
-                messageTimer.Stop();
-                lblDone.Visible = true;
-                lnkOpenFolder.Visible = true;
-                messageTimer.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, "Unable to generate the code: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            return gen;
         }
+
+
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
@@ -155,11 +207,6 @@ namespace Xamasoft.JsonClassGenerator.UI
             {
                 w.ShowDialog(this);
             }
-        }
-
-        private void btnPaste_Click(object sender, EventArgs e)
-        {
-            edtJson.Text = Clipboard.GetText();
         }
 
         private void chkExplicitDeserialization_CheckedChanged(object sender, EventArgs e)
@@ -220,14 +267,26 @@ namespace Xamasoft.JsonClassGenerator.UI
                     f.ShowDialog(this);
                 }
             }
+            else if (e.KeyCode == Keys.F9)
+            {
+                e.Handled = true;
+                PasteAndGo();
+            }
             base.OnKeyDown(e);
         }
 
         private void messageTimer_Tick(object sender, EventArgs e)
         {
             messageTimer.Stop();
+            HideCompletionMessage();
+        }
+
+        private void HideCompletionMessage()
+        {
+
             lnkOpenFolder.Visible = false;
             lblDone.Visible = false;
+            lblDoneClipboard.Visible = false;
         }
 
         private void lnkOpenFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -250,6 +309,11 @@ namespace Xamasoft.JsonClassGenerator.UI
                 edtJson.SelectionLength = edtJson.TextLength;
                 e.Handled = true;
             }
+        }
+
+        private void btnPasteAndGo_Click(object sender, EventArgs e)
+        {
+            PasteAndGo();
         }
 
         //private void edtMainClass_Enter(object sender, EventArgs e)

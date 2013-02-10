@@ -59,7 +59,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             return config.ApplyObfuscationAttributes && !config.ExplicitDeserialization && config.UseProperties;
         }
 
-        public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileStart(IJsonClassGeneratorConfig config, TextWriter sw)
         {
 
             foreach (var line in JsonClassGenerator.FileHeader)
@@ -82,12 +82,12 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             }
         }
 
-        public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileEnd(IJsonClassGeneratorConfig config, TextWriter sw)
         {
         }
 
 
-        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
             sw.WriteLine();
             sw.WriteLine("namespace {0}", root && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
@@ -95,12 +95,12 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             sw.WriteLine();
         }
 
-        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
             sw.WriteLine("}");
         }
 
-        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type)
+        public void WriteClass(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type)
         {
             var visibility = config.InternalVisibility ? "internal" : "public";
 
@@ -170,7 +170,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
 
 
 
-        private void WriteClassMembers(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, string prefix)
+        private void WriteClassMembers(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type, string prefix)
         {
             foreach (var field in type.Fields)
             {
@@ -199,7 +199,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
 
 
         #region Code for (obsolete) explicit deserialization
-        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, JsonType type, string prefix)
+        private void WriteClassWithPropertiesExplicitDeserialization(TextWriter sw, JsonType type, string prefix)
         {
 
             sw.WriteLine(prefix + "private JObject __jobject;");
@@ -244,7 +244,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
         }
 
 
-        private void WriteStringConstructorExplicitDeserialization(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, string prefix)
+        private void WriteStringConstructorExplicitDeserialization(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type, string prefix)
         {
             sw.WriteLine();
             sw.WriteLine(prefix + "public {1}(string json)", config.InternalVisibility ? "internal" : "public", type.AssignedName);
@@ -254,7 +254,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             sw.WriteLine();
         }
 
-        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, JsonType type, string prefix)
+        private void WriteClassWithFieldsExplicitDeserialization(TextWriter sw, JsonType type, string prefix)
         {
 
 

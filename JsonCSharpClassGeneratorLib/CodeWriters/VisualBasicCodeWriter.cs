@@ -57,7 +57,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             return config.ApplyObfuscationAttributes && !config.ExplicitDeserialization && config.UseProperties;
         }
 
-        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type)
+        public void WriteClass(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type)
         {
             var visibility = config.InternalVisibility ? "Friend" : "Public";
 
@@ -91,7 +91,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
         }
 
 
-        private void WriteClassMembers(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, string prefix)
+        private void WriteClassMembers(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type, string prefix)
         {
             foreach (var field in type.Fields)
             {
@@ -117,7 +117,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
 
 
 
-        public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileStart(IJsonClassGeneratorConfig config, TextWriter sw)
         {
             foreach (var line in JsonClassGenerator.FileHeader)
             {
@@ -137,19 +137,19 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             }
         }
 
-        public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
+        public void WriteFileEnd(IJsonClassGeneratorConfig config, TextWriter sw)
         {
         }
 
 
-        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
             sw.WriteLine();
             sw.WriteLine("Namespace Global.{0}", root && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
             sw.WriteLine();
         }
 
-        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, TextWriter sw, bool root)
         {
 
             sw.WriteLine("End Namespace");
