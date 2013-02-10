@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,6 @@ namespace Xamasoft.JsonClassGenerator.UI
 {
     public partial class frmCSharpClassGeneration : Form
     {
-
-
 
 
 
@@ -99,7 +98,6 @@ namespace Xamasoft.JsonClassGenerator.UI
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-
             if (edtJson.Text == string.Empty)
             {
                 MessageBox.Show(this, "Please insert some sample JSON.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -140,7 +138,10 @@ namespace Xamasoft.JsonClassGenerator.UI
             try
             {
                 gen.GenerateClasses();
-                MessageBox.Show(this, "The code has been generated successfully.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                messageTimer.Stop();
+                lblDone.Visible = true;
+                lnkOpenFolder.Visible = true;
+                messageTimer.Start();
             }
             catch (Exception ex)
             {
@@ -206,6 +207,39 @@ namespace Xamasoft.JsonClassGenerator.UI
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateStatus();
+        }
+
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                e.Handled = true;
+                using (var f = new frmAbout())
+                {
+                    f.ShowDialog(this);
+                }
+            }
+            base.OnKeyDown(e);
+        }
+
+        private void messageTimer_Tick(object sender, EventArgs e)
+        {
+            messageTimer.Stop();
+            lnkOpenFolder.Visible = false;
+            lblDone.Visible = false;
+        }
+
+        private void lnkOpenFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start(edtTargetFolder.Text);
+            }
+            catch (Exception)
+            {
+            }
+            
         }
 
         //private void edtMainClass_Enter(object sender, EventArgs e)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCSharpClassGeneration));
             this.btnGenerate = new System.Windows.Forms.Button();
             this.edtJson = new System.Windows.Forms.TextBox();
@@ -63,6 +64,9 @@
             this.edtNamespace = new System.Windows.Forms.TextBox();
             this.chkSingleFile = new System.Windows.Forms.CheckBox();
             this.btnAbout = new System.Windows.Forms.Button();
+            this.lblDone = new System.Windows.Forms.Label();
+            this.lnkOpenFolder = new Xamasoft.Controls.BetterLinkLabel();
+            this.messageTimer = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -436,12 +440,45 @@
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
+            // lblDone
+            // 
+            this.lblDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDone.AutoSize = true;
+            this.lblDone.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDone.ForeColor = System.Drawing.Color.Green;
+            this.lblDone.Location = new System.Drawing.Point(346, 534);
+            this.lblDone.Name = "lblDone";
+            this.lblDone.Size = new System.Drawing.Size(39, 13);
+            this.lblDone.TabIndex = 38;
+            this.lblDone.Text = "Done!";
+            this.lblDone.Visible = false;
+            // 
+            // lnkOpenFolder
+            // 
+            this.lnkOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkOpenFolder.AutoSize = true;
+            this.lnkOpenFolder.Location = new System.Drawing.Point(390, 534);
+            this.lnkOpenFolder.Name = "lnkOpenFolder";
+            this.lnkOpenFolder.Size = new System.Drawing.Size(62, 13);
+            this.lnkOpenFolder.TabIndex = 39;
+            this.lnkOpenFolder.TabStop = true;
+            this.lnkOpenFolder.Text = "Open folder";
+            this.lnkOpenFolder.Visible = false;
+            this.lnkOpenFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenFolder_LinkClicked);
+            // 
+            // messageTimer
+            // 
+            this.messageTimer.Interval = 7000;
+            this.messageTimer.Tick += new System.EventHandler(this.messageTimer_Tick);
+            // 
             // frmCSharpClassGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.lnkOpenFolder);
+            this.Controls.Add(this.lblDone);
             this.Controls.Add(this.chkSingleFile);
             this.Controls.Add(this.lblLanguage);
             this.Controls.Add(this.cmbLanguage);
@@ -469,6 +506,7 @@
             this.Controls.Add(this.edtJson);
             this.Controls.Add(this.btnGenerate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(671, 444);
             this.Name = "frmCSharpClassGeneration";
             this.Text = "Xamasoft JSON Class Generator";
@@ -521,6 +559,9 @@
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguage;
         private System.Windows.Forms.CheckBox chkSingleFile;
+        private System.Windows.Forms.Label lblDone;
+        private Xamasoft.Controls.BetterLinkLabel lnkOpenFolder;
+        private System.Windows.Forms.Timer messageTimer;
     }
 }
 
