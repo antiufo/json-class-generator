@@ -35,36 +35,94 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
-
+        private bool used = false;
 
         public void GenerateClasses()
         {
-
             if (CodeWriter == null) CodeWriter = new CSharpCodeWriter();
             if (ExplicitDeserialization && !(CodeWriter is CSharpCodeWriter)) throw new ArgumentException("Explicit deserialization is obsolete and is only supported by the C# provider.");
-            if (!Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
 
-            var json = JObject.Parse(Example);
+            if (used) throw new InvalidOperationException("This instance of JsonClassGenerator has already been used. Please create a new instance.");
+            used = true;
 
-            var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            if (!NoHelperClass && ExplicitDeserialization) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
+            var writeToDisk = TargetFolder != null;
+            if (writeToDisk && !Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
 
+
+            JObject[] examples;
+            using (var sr = new StringReader(Example))
+            using (var reader = new JsonTextReader(sr))
+            {
+                var json = JToken.ReadFrom(reader);
+                if (json is JArray)
+                {
+                    examples = ((JArray)json).Cast<JObject>().ToArray();
+                }
+                else if (json is JObject)
+                {
+                    examples = new[] { (JObject)json };
+                }
+                else
+                {
+                    throw new Exception("Sample JSON must be either a JSON array, or a JSON object.");
+                }
+            }
+
+
+            Types = new List<JsonType>();
             Names.Add(MainClass);
-            var type = new JsonType(this, json);
-            type.IsRoot = true;
-            type.AssignName(MainClass);
-            GenerateClass(new JObject[] { json }, type);
+            var rootType = new JsonType(this, examples[0]);
+            rootType.IsRoot = true;
+            rootType.AssignName(MainClass);
+            GenerateClass(examples, rootType);
+
+            if (writeToDisk)
+            {
+
+                var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (writeToDisk && !NoHelperClass && ExplicitDeserialization) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
+                if (SingleFile)
+                {
+                    WriteClassesToFile(Path.Combine(TargetFolder, MainClass + CodeWriter.FileExtension), Types);
+                }
+                else
+                {
+
+                    foreach (var type in Types)
+                    {
+                        var folder = TargetFolder;
+                        if (!UseNestedClasses && !type.IsRoot && SecondaryNamespace != null)
+                        {
+                            var s = SecondaryNamespace;
+                            if (s.StartsWith(Namespace + ".")) s = s.Substring(Namespace.Length + 1);
+                            folder = Path.Combine(folder, s);
+                            Directory.CreateDirectory(folder);
+                        }
+                        WriteClassesToFile(Path.Combine(folder, type.AssignedName + CodeWriter.FileExtension), new[] { type });
+                    }
+                }
+            }
 
         }
 
 
 
-
+        private void WriteClassesToFile(string path, IEnumerable<JsonType> types)
+        {
+            using (var sw = new StreamWriter(path, false, Encoding.UTF8))
+            {
+                CodeWriter.WriteFileStart(this, sw);
+                foreach (var type in types)
+                {
+                    CodeWriter.WriteClass(this, sw, type);
+                }
+                CodeWriter.WriteFileEnd(this, sw);
+            }
+        }
 
 
         private void GenerateClass(JObject[] examples, JsonType type)
         {
-            var hasSecondaryClasses = false;
             var jsonFields = new Dictionary<string, JsonType>();
 
             var first = true;
@@ -121,7 +179,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
                     fieldType.AssignName(CreateUniqueClassName(field.Key));
                     GenerateClass(subexamples.ToArray(), fieldType);
-                    hasSecondaryClasses = true;
                 }
 
                 if (fieldType.InternalType != null && fieldType.InternalType.Type == JsonTypeEnum.Object)
@@ -152,32 +209,16 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
                     field.Value.InternalType.AssignName(CreateUniqueClassNameFromPlural(field.Key));
                     GenerateClass(subexamples.ToArray(), field.Value.InternalType);
-                    hasSecondaryClasses = true;
                 }
             }
 
             type.Fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase)).ToArray();
 
-            var folder = TargetFolder;
-            if (!UseNestedClasses && !type.IsRoot && SecondaryNamespace != null)
-            {
-                var s = SecondaryNamespace;
-                if (s.StartsWith(Namespace + ".")) s = s.Substring(Namespace.Length + 1);
-                folder = Path.Combine(folder, s);
-                Directory.CreateDirectory(folder);
-            }
-
-
-
-            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !type.IsRoot ? MainClass + "." : "") + type.AssignedName + CodeWriter.FileExtension), false, Encoding.UTF8))
-            {
-                CodeWriter.WriteClass(this, sw, type, hasSecondaryClasses);
-            }
-
+            Types.Add(type);
 
         }
 
-        private List<JsonType> Classes = new List<JsonType>();
+        public IList<JsonType> Types { get; private set; }
         private HashSet<string> Names = new HashSet<string>();
 
         private string CreateUniqueClassName(string name)
@@ -226,9 +267,9 @@ namespace Xamasoft.JsonCSharpClassGenerator
             return sb.ToString();
         }
 
-
-
-
-
+        public bool HasSecondaryClasses
+        {
+            get { return Types.Count > 1; }
+        }
     }
 }

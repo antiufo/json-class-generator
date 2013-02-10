@@ -19,6 +19,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
         bool ApplyObfuscationAttributes { get; set; }
         bool SingleFile { get; set; }
         ICodeWriter CodeWriter { get; set; }
-
+        bool HasSecondaryClasses { get; }
     }
 }

@@ -48,27 +48,19 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
             }
         }
 
+        private bool ShouldApplyNoRenamingAttribute(IJsonClassGeneratorConfig config)
+        {
+            return config.ApplyObfuscationAttributes && !config.ExplicitDeserialization && !config.UsePascalCase;
+        }
+        private bool ShouldApplyNoPruneAttribute(IJsonClassGeneratorConfig config)
+        {
+            return config.ApplyObfuscationAttributes && !config.ExplicitDeserialization && config.UseProperties;
+        }
 
-        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, bool hasSecondaryClasses)
+        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type)
         {
             var visibility = config.InternalVisibility ? "Friend" : "Public";
-            var applyNoRenamingAttribute = config.ApplyObfuscationAttributes && !config.UsePascalCase;
-            var applyNoPruneAttribute = config.ApplyObfuscationAttributes && config.UseProperties;
 
-            sw.WriteLine("' JSON C# Class Generator");
-            sw.WriteLine("' http://www.xamasoft.com/json-csharp-class-generator");
-            sw.WriteLine();
-            sw.WriteLine("Imports System");
-            sw.WriteLine("Imports System.Collections.Generic");
-            if (applyNoRenamingAttribute || applyNoPruneAttribute)
-                sw.WriteLine("Imports System.Reflection");
-            if (config.UsePascalCase)
-                sw.WriteLine("Imports Newtonsoft.Json");
-            sw.WriteLine("Imports Newtonsoft.Json.Linq");
-            if (config.SecondaryNamespace != null && type.IsRoot && hasSecondaryClasses && !config.UseNestedClasses)
-            {
-                sw.WriteLine("Imports {0}", config.SecondaryNamespace);
-            }
             sw.WriteLine();
             sw.WriteLine("Namespace Global.{0}", type.IsRoot && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
             sw.WriteLine();
@@ -78,15 +70,15 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
                 sw.WriteLine("    {0} Partial Class {1}", visibility, config.MainClass);
                 if (!type.IsRoot)
                 {
-                    if (applyNoRenamingAttribute) sw.WriteLine("        " + NoRenameAttribute);
-                    if (applyNoPruneAttribute) sw.WriteLine("        " + NoPruneAttribute);
+                    if (ShouldApplyNoRenamingAttribute(config)) sw.WriteLine("        " + NoRenameAttribute);
+                    if (ShouldApplyNoPruneAttribute(config)) sw.WriteLine("        " + NoPruneAttribute);
                     sw.WriteLine("        {0} Class {1}", visibility, type.AssignedName);
                 }
             }
             else
             {
-                if (applyNoRenamingAttribute) sw.WriteLine("    " + NoRenameAttribute);
-                if (applyNoPruneAttribute) sw.WriteLine("    " + NoPruneAttribute);
+                if (ShouldApplyNoRenamingAttribute(config)) sw.WriteLine("    " + NoRenameAttribute);
+                if (ShouldApplyNoPruneAttribute(config)) sw.WriteLine("    " + NoPruneAttribute);
                 sw.WriteLine("    {0} Class {1}", visibility, type.AssignedName);
             }
 
@@ -130,5 +122,28 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
 
 
+
+
+        public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
+        {
+            sw.WriteLine("' JSON C# Class Generator");
+            sw.WriteLine("' http://www.xamasoft.com/json-csharp-class-generator");
+            sw.WriteLine();
+            sw.WriteLine("Imports System");
+            sw.WriteLine("Imports System.Collections.Generic");
+            if (ShouldApplyNoRenamingAttribute(config) || ShouldApplyNoPruneAttribute(config))
+                sw.WriteLine("Imports System.Reflection");
+            if (config.UsePascalCase)
+                sw.WriteLine("Imports Newtonsoft.Json");
+            sw.WriteLine("Imports Newtonsoft.Json.Linq");
+            if (config.SecondaryNamespace != null && config.HasSecondaryClasses && !config.UseNestedClasses)
+            {
+                sw.WriteLine("Imports {0}", config.SecondaryNamespace);
+            }
+        }
+
+        public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
+        {
+        }
     }
 }
