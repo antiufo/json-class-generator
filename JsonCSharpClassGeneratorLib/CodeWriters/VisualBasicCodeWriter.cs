@@ -61,10 +61,6 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
         {
             var visibility = config.InternalVisibility ? "Friend" : "Public";
 
-            sw.WriteLine();
-            sw.WriteLine("Namespace Global.{0}", type.IsRoot && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
-            sw.WriteLine();
-
             if (config.UseNestedClasses)
             {
                 sw.WriteLine("    {0} Partial Class {1}", visibility, config.MainClass);
@@ -90,10 +86,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
                 sw.WriteLine("        End Class");
 
             sw.WriteLine("    End Class");
-
             sw.WriteLine();
-            sw.WriteLine("End Namespace");
-
 
         }
 
@@ -110,11 +103,11 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
                 if (config.UseProperties)
                 {
-                    sw.WriteLine(prefix + "Public Property {1} As {0}", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine(prefix + "Public Property {1} As {0}", field.Type.GetTypeName(), field.MemberName);
                 }
                 else
                 {
-                    sw.WriteLine(prefix + "Public {1} As {0}", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine(prefix + "Public {1} As {0}", field.Type.GetTypeName(), field.MemberName);
                 }
             }
 
@@ -126,8 +119,10 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
         public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
         {
-            sw.WriteLine("' JSON C# Class Generator");
-            sw.WriteLine("' http://www.xamasoft.com/json-csharp-class-generator");
+            foreach (var line in JsonClassGenerator.FileHeader)
+            {
+                sw.WriteLine("' " + line);
+            }
             sw.WriteLine();
             sw.WriteLine("Imports System");
             sw.WriteLine("Imports System.Collections.Generic");
@@ -144,6 +139,21 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
         public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
         {
+        }
+
+
+        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        {
+            sw.WriteLine();
+            sw.WriteLine("Namespace Global.{0}", root && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
+            sw.WriteLine();
+        }
+
+        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        {
+
+            sw.WriteLine("End Namespace");
+
         }
     }
 }

@@ -31,12 +31,12 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 var innermost = field.Type.GetInnermostType();
                 return string.Format("({1})JsonClassHelper.ReadArray<{5}>(JsonClassHelper.GetJToken<JArray>({0}, \"{2}\"), JsonClassHelper.{3}, typeof({6}))",
                     jobject,
-                    field.Type.GetCSharpType(),
+                    field.Type.GetTypeName(),
                     field.JsonMemberName,
                     innermost.GetReaderName(),
                     -1,
-                    innermost.GetCSharpType(),
-                    field.Type.GetCSharpType()
+                    innermost.GetTypeName(),
+                    field.Type.GetTypeName()
                     );
             }
             else if (field.Type.Type == JsonTypeEnum.Dictionary)
@@ -44,10 +44,10 @@ namespace Xamasoft.JsonCSharpClassGenerator
   
                 return string.Format("({1})JsonClassHelper.ReadDictionary<{2}>(JsonClassHelper.GetJToken<JObject>({0}, \"{3}\"))",
                     jobject,
-                    field.Type.GetCSharpType(),
-                    field.Type.InternalType.GetCSharpType(),
+                    field.Type.GetTypeName(),
+                    field.Type.InternalType.GetTypeName(),
                     field.JsonMemberName,
-                    field.Type.GetCSharpType()
+                    field.Type.GetTypeName()
                     );
             }
             else

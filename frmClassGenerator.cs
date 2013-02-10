@@ -83,7 +83,9 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
 
         private readonly static ICodeWriter[] CodeWriters = new ICodeWriter[] {
             new CSharpCodeWriter(),
-            new VisualBasicCodeWriter()
+            new VisualBasicCodeWriter(),
+            new TypeScriptCodeWriter(),
+            new JavaCodeWriter()
         };
 
         private void edtNamespace_TextChanged(object sender, EventArgs e)

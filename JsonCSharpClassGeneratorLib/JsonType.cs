@@ -103,7 +103,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
             }
             else if (Type == JsonTypeEnum.Array)
             {
-                return string.Format("ReadArray<{0}>", InternalType.GetCSharpType());
+                return string.Format("ReadArray<{0}>", InternalType.GetTypeName());
             }
             else
             {
@@ -119,7 +119,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
         }
 
 
-        public string GetCSharpType()
+        public string GetTypeName()
         {
             return generator.CodeWriter.GetTypeName(this, generator);
         }
