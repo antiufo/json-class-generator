@@ -62,8 +62,10 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
         public void WriteFileStart(IJsonClassGeneratorConfig config, StreamWriter sw)
         {
 
-            sw.WriteLine("// JSON C# Class Generator");
-            sw.WriteLine("// http://www.xamasoft.com/json-csharp-class-generator");
+            foreach (var line in JsonClassGenerator.FileHeader)
+            {
+                sw.WriteLine("// " + line);
+            }
             sw.WriteLine();
             sw.WriteLine("using System;");
             sw.WriteLine("using System.Collections.Generic;");
@@ -81,17 +83,28 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
         }
 
         public void WriteFileEnd(IJsonClassGeneratorConfig config, StreamWriter sw)
-        { 
+        {
+        }
+
+
+        public void WriteNamespaceStart(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        {
+            sw.WriteLine();
+            sw.WriteLine("namespace {0}", root && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
+            sw.WriteLine("{");
+            sw.WriteLine();
+        }
+
+        public void WriteNamespaceEnd(IJsonClassGeneratorConfig config, StreamWriter sw, bool root)
+        {
+            sw.WriteLine("}");
         }
 
         public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type)
         {
             var visibility = config.InternalVisibility ? "internal" : "public";
 
-            sw.WriteLine();
-            sw.WriteLine("namespace {0}", type.IsRoot && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
-            sw.WriteLine("{");
-            sw.WriteLine();
+
 
             if (config.UseNestedClasses)
             {
@@ -148,8 +161,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
             sw.WriteLine("    }");
 
-
-            sw.WriteLine("}");
+            sw.WriteLine();
 
 
         }
@@ -170,11 +182,11 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
                 if (config.UseProperties)
                 {
-                    sw.WriteLine(prefix + "public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine(prefix + "public {0} {1} {{ get; set; }}", field.Type.GetTypeName(), field.MemberName);
                 }
                 else
                 {
-                    sw.WriteLine(prefix + "public {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+                    sw.WriteLine(prefix + "public {0} {1};", field.Type.GetTypeName(), field.MemberName);
                 }
             }
 
@@ -205,11 +217,11 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
                 {
                     variable = "_" + char.ToLower(field.MemberName[0]) + field.MemberName.Substring(1);
                     sw.WriteLine(prefix + "[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]");
-                    sw.WriteLine(prefix + "private {0} {1};", field.Type.GetCSharpType(), variable);
+                    sw.WriteLine(prefix + "private {0} {1};", field.Type.GetTypeName(), variable);
                 }
 
 
-                sw.WriteLine(prefix + "public {0} {1}", field.Type.GetCSharpType(), field.MemberName);
+                sw.WriteLine(prefix + "public {0} {1}", field.Type.GetTypeName(), field.MemberName);
                 sw.WriteLine(prefix + "{");
                 sw.WriteLine(prefix + "    get");
                 sw.WriteLine(prefix + "    {");
@@ -260,7 +272,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
             foreach (var field in type.Fields)
             {
-                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(), field.MemberName);
+                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetTypeName(), field.MemberName);
             }
         }
         #endregion
