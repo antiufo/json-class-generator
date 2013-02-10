@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Json C# Class Generator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Xamasoft")]
 [assembly: AssemblyProduct("Json C# Class Generator")]
-[assembly: AssemblyCopyright("Copyright © Andrea Martinelli 2010 - 2012")]
+[assembly: AssemblyCopyright("Copyright © Xamasoft 2010 - 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

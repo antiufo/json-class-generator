@@ -65,10 +65,10 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(23, 118);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(173, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(264, 13);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://at-my-window.blogspot.com/";
+            this.linkLabel1.Text = "http://www.xamasoft.com/json-csharp-class-generator";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // lblVersion
@@ -85,9 +85,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(23, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 13);
+            this.label1.Size = new System.Drawing.Size(164, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Copyright © 2010-2012 Andrea Martinelli";
+            this.label1.Text = "Copyright © 2010-2013 Xamasoft";
             // 
             // btnSendFeedback
             // 
