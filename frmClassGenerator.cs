@@ -61,6 +61,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
                 settings.SecondaryNamespace = string.Empty;
             }
             settings.Language = cmbLanguage.SelectedItem.GetType().Name;
+            settings.SingleFile = chkSingleFile.Checked;
             settings.Save();
         }
 
@@ -76,6 +77,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             cmbLanguage.Items.AddRange(CodeWriters);
             var langIndex = CodeWriters.ToList().FindIndex(x => x.GetType().Name == settings.Language);
             cmbLanguage.SelectedIndex = langIndex != -1 ? langIndex : 0;
+            chkSingleFile.Checked = settings.SingleFile;
             UpdateStatus();
         }
 
@@ -132,6 +134,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI
             gen.UsePascalCase = chkPascalCase.Checked;
             gen.UseNestedClasses = radNestedClasses.Checked;
             gen.ApplyObfuscationAttributes = chkApplyObfuscationAttributes.Checked;
+            gen.SingleFile = chkSingleFile.Checked;
             try
             {
                 gen.GenerateClasses();

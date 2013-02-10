@@ -49,7 +49,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
         }
 
 
-        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, bool hasSecondaryClasses)
+        public void WriteClass(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, bool hasSecondaryClasses)
         {
             var visibility = config.InternalVisibility ? "Friend" : "Public";
             var applyNoRenamingAttribute = config.ApplyObfuscationAttributes && !config.UsePascalCase;
@@ -65,36 +65,36 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
             if (config.UsePascalCase)
                 sw.WriteLine("Imports Newtonsoft.Json");
             sw.WriteLine("Imports Newtonsoft.Json.Linq");
-            if (config.SecondaryNamespace != null && isRoot && hasSecondaryClasses && !config.UseNestedClasses)
+            if (config.SecondaryNamespace != null && type.IsRoot && hasSecondaryClasses && !config.UseNestedClasses)
             {
                 sw.WriteLine("Imports {0}", config.SecondaryNamespace);
             }
             sw.WriteLine();
-            sw.WriteLine("Namespace Global.{0}", isRoot && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
+            sw.WriteLine("Namespace Global.{0}", type.IsRoot && !config.UseNestedClasses ? config.Namespace : (config.SecondaryNamespace ?? config.Namespace));
             sw.WriteLine();
 
             if (config.UseNestedClasses)
             {
                 sw.WriteLine("    {0} Partial Class {1}", visibility, config.MainClass);
-                if (!isRoot)
+                if (!type.IsRoot)
                 {
                     if (applyNoRenamingAttribute) sw.WriteLine("        " + NoRenameAttribute);
                     if (applyNoPruneAttribute) sw.WriteLine("        " + NoPruneAttribute);
-                    sw.WriteLine("        {0} Class {1}", visibility, className);
+                    sw.WriteLine("        {0} Class {1}", visibility, type.AssignedName);
                 }
             }
             else
             {
                 if (applyNoRenamingAttribute) sw.WriteLine("    " + NoRenameAttribute);
                 if (applyNoPruneAttribute) sw.WriteLine("    " + NoPruneAttribute);
-                sw.WriteLine("    {0} Class {1}", visibility, className);
+                sw.WriteLine("    {0} Class {1}", visibility, type.AssignedName);
             }
 
-            var prefix = config.UseNestedClasses && !isRoot ? "            " : "        ";
+            var prefix = config.UseNestedClasses && !type.IsRoot ? "            " : "        ";
 
-            WriteClassMembers(config, sw, fields, prefix);
+            WriteClassMembers(config, sw, type, prefix);
 
-            if (config.UseNestedClasses && !isRoot)
+            if (config.UseNestedClasses && !type.IsRoot)
                 sw.WriteLine("        End Class");
 
             sw.WriteLine("    End Class");
@@ -106,9 +106,9 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
         }
 
 
-        private void WriteClassMembers(IJsonClassGeneratorConfig config, StreamWriter sw, FieldInfo[] fields, string prefix)
+        private void WriteClassMembers(IJsonClassGeneratorConfig config, StreamWriter sw, JsonType type, string prefix)
         {
-            foreach (var field in fields)
+            foreach (var field in type.Fields)
             {
                 if (config.UsePascalCase)
                 {

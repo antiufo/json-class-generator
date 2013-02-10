@@ -14,9 +14,14 @@ namespace Xamasoft.JsonCSharpClassGenerator
     {
 
 
-        public JsonType(IJsonClassGeneratorConfig generator, JToken token)
+        private JsonType(IJsonClassGeneratorConfig generator)
         {
             this.generator = generator;
+        }
+
+        public JsonType(IJsonClassGeneratorConfig generator, JToken token)
+            : this(generator)
+        {
 
             Type = GetFirstTypeEnum(token);
 
@@ -34,9 +39,9 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
         private IJsonClassGeneratorConfig generator;
 
-        private JsonType(IJsonClassGeneratorConfig generator, JsonTypeEnum type)
+        internal JsonType(IJsonClassGeneratorConfig generator, JsonTypeEnum type)
+            : this(generator)
         {
-            this.generator = generator;
             this.Type = type;
         }
 
@@ -305,5 +310,8 @@ namespace Xamasoft.JsonCSharpClassGenerator
             }
         }
 
+
+        public IList<FieldInfo> Fields { get; internal set; }
+        public bool IsRoot { get; internal set; }
     }
 }

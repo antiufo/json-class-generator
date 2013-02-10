@@ -178,5 +178,17 @@ namespace Xamasoft.JsonCSharpClassGenerator.UI.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SingleFile {
+            get {
+                return ((bool)(this["SingleFile"]));
+            }
+            set {
+                this["SingleFile"] = value;
+            }
+        }
     }
 }

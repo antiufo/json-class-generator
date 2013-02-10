@@ -17,6 +17,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
         bool UsePascalCase { get; set; }
         bool UseNestedClasses { get; set; }
         bool ApplyObfuscationAttributes { get; set; }
+        bool SingleFile { get; set; }
         ICodeWriter CodeWriter { get; set; }
 
     }

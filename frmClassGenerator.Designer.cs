@@ -62,6 +62,7 @@
             this.edtTargetFolder = new System.Windows.Forms.TextBox();
             this.chkNoHelper = new System.Windows.Forms.CheckBox();
             this.edtNamespace = new System.Windows.Forms.TextBox();
+            this.chkSingleFile = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -425,12 +426,23 @@
             this.edtNamespace.Text = global::Xamasoft.JsonCSharpClassGenerator.UI.Properties.Settings.Default.Namespace;
             this.edtNamespace.TextChanged += new System.EventHandler(this.edtNamespace_TextChanged);
             // 
+            // chkSingleFile
+            // 
+            this.chkSingleFile.AutoSize = true;
+            this.chkSingleFile.Location = new System.Drawing.Point(349, 235);
+            this.chkSingleFile.Name = "chkSingleFile";
+            this.chkSingleFile.Size = new System.Drawing.Size(125, 17);
+            this.chkSingleFile.TabIndex = 38;
+            this.chkSingleFile.Text = "Generate a single file";
+            this.chkSingleFile.UseVisualStyleBackColor = true;
+            // 
             // frmCSharpClassGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.chkSingleFile);
             this.Controls.Add(this.lblLanguage);
             this.Controls.Add(this.cmbLanguage);
             this.Controls.Add(this.chkApplyObfuscationAttributes);
@@ -507,6 +519,7 @@
         private System.Windows.Forms.CheckBox chkApplyObfuscationAttributes;
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguage;
+        private System.Windows.Forms.CheckBox chkSingleFile;
     }
 }
 

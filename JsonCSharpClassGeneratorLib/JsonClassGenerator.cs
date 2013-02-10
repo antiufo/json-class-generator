@@ -30,6 +30,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
         public bool UsePascalCase { get; set; }
         public bool UseNestedClasses { get; set; }
         public bool ApplyObfuscationAttributes { get; set; }
+        public bool SingleFile { get; set; }
         public ICodeWriter CodeWriter { get; set; }
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
@@ -47,8 +48,12 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
             var parentFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             if (!NoHelperClass && ExplicitDeserialization) File.WriteAllBytes(Path.Combine(TargetFolder, "JsonClassHelper.cs"), Properties.Resources.JsonClassHelper);
-            GeneratedNames.Add(MainClass.ToLower());
-            GenerateClass(new JObject[] { json }, MainClass, true);
+
+            Names.Add(MainClass);
+            var type = new JsonType(this, json);
+            type.IsRoot = true;
+            type.AssignName(MainClass);
+            GenerateClass(new JObject[] { json }, type);
 
         }
 
@@ -57,13 +62,13 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
 
 
-        private void GenerateClass(JObject[] examples, string className, bool isRoot)
+        private void GenerateClass(JObject[] examples, JsonType type)
         {
             var hasSecondaryClasses = false;
             var jsonFields = new Dictionary<string, JsonType>();
 
             var first = true;
-        
+
             foreach (var obj in examples)
             {
                 foreach (var prop in obj.Properties())
@@ -92,14 +97,14 @@ namespace Xamasoft.JsonCSharpClassGenerator
             {
                 foreach (var field in jsonFields)
                 {
-                    GeneratedNames.Add(field.Key.ToLower());
+                    Names.Add(field.Key.ToLower());
                 }
             }
 
             foreach (var field in jsonFields)
             {
-                var type = field.Value;
-                if (type.Type == JsonTypeEnum.Object)
+                var fieldType = field.Value;
+                if (fieldType.Type == JsonTypeEnum.Object)
                 {
                     var subexamples = new List<JObject>(examples.Length);
                     foreach (var obj in examples)
@@ -114,12 +119,12 @@ namespace Xamasoft.JsonCSharpClassGenerator
                         }
                     }
 
-                    field.Value.AssignName(CreateName(field.Key));
-                    GenerateClass(subexamples.ToArray(), field.Value.AssignedName, false);
+                    fieldType.AssignName(CreateUniqueClassName(field.Key));
+                    GenerateClass(subexamples.ToArray(), fieldType);
                     hasSecondaryClasses = true;
                 }
 
-                if (type.InternalType != null && type.InternalType.Type == JsonTypeEnum.Object)
+                if (fieldType.InternalType != null && fieldType.InternalType.Type == JsonTypeEnum.Object)
                 {
                     var subexamples = new List<JObject>(examples.Length);
                     foreach (var obj in examples)
@@ -145,16 +150,16 @@ namespace Xamasoft.JsonCSharpClassGenerator
                         }
                     }
 
-                    field.Value.InternalType.AssignName(CreateNameFromPlural(field.Key));
-                    GenerateClass(subexamples.ToArray(), field.Value.InternalType.AssignedName, false);
+                    field.Value.InternalType.AssignName(CreateUniqueClassNameFromPlural(field.Key));
+                    GenerateClass(subexamples.ToArray(), field.Value.InternalType);
                     hasSecondaryClasses = true;
                 }
             }
 
-            var fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase)).ToArray();
+            type.Fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase)).ToArray();
 
             var folder = TargetFolder;
-            if (!UseNestedClasses && !isRoot && SecondaryNamespace != null)
+            if (!UseNestedClasses && !type.IsRoot && SecondaryNamespace != null)
             {
                 var s = SecondaryNamespace;
                 if (s.StartsWith(Namespace + ".")) s = s.Substring(Namespace.Length + 1);
@@ -162,39 +167,39 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 Directory.CreateDirectory(folder);
             }
 
-            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + CodeWriter.FileExtension), false, Encoding.UTF8))
+
+
+            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !type.IsRoot ? MainClass + "." : "") + type.AssignedName + CodeWriter.FileExtension), false, Encoding.UTF8))
             {
-                CodeWriter.WriteClass(this, sw, className, fields, isRoot, hasSecondaryClasses);
+                CodeWriter.WriteClass(this, sw, type, hasSecondaryClasses);
             }
 
 
         }
 
-        private HashSet<string> GeneratedNames = new HashSet<string>();
+        private List<JsonType> Classes = new List<JsonType>();
+        private HashSet<string> Names = new HashSet<string>();
 
-        private string CreateName(string name)
+        private string CreateUniqueClassName(string name)
         {
             name = ToTitleCase(name);
 
             var finalName = name;
-            if (GeneratedNames.Contains(finalName.ToLower()))
+            var i = 2;
+            while (Names.Any(x => x.Equals(finalName, StringComparison.OrdinalIgnoreCase)))
             {
-                var i = 2;
-                do
-                {
-                    finalName = name + i.ToString();
-                    i++;
-                } while (GeneratedNames.Contains(finalName.ToLower()));
+                finalName = name + i.ToString();
+                i++;
             }
 
-            GeneratedNames.Add(finalName.ToLower());
+            Names.Add(finalName);
             return finalName;
         }
 
-        private string CreateNameFromPlural(string plural)
+        private string CreateUniqueClassNameFromPlural(string plural)
         {
             plural = ToTitleCase(plural);
-            return CreateName(pluralizationService.Singularize(plural));
+            return CreateUniqueClassName(pluralizationService.Singularize(plural));
         }
 
 
