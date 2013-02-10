@@ -95,6 +95,7 @@
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.edtJson.Size = new System.Drawing.Size(680, 245);
             this.edtJson.TabIndex = 14;
+            this.edtJson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edtJson_KeyDown);
             // 
             // label1
             // 

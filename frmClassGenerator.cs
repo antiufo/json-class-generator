@@ -239,7 +239,17 @@ namespace Xamasoft.JsonClassGenerator.UI
             catch (Exception)
             {
             }
-            
+
+        }
+
+        private void edtJson_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                edtJson.SelectionStart = 0;
+                edtJson.SelectionLength = edtJson.TextLength;
+                e.Handled = true;
+            }
         }
 
         //private void edtMainClass_Enter(object sender, EventArgs e)
