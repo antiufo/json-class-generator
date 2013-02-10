@@ -13,46 +13,33 @@ using System.Globalization;
 
 namespace Xamasoft.JsonCSharpClassGenerator
 {
-    public class JsonClassGenerator
+    public class JsonClassGenerator : IJsonClassGeneratorConfig
     {
 
 
-        public string Example;
-        public string TargetFolder;
-        public string Namespace;
-        public string SecondaryNamespace;
-        public bool UseProperties;
-        public bool InternalVisibility;
-        public bool ExplicitDeserialization;
-        public bool NoHelperClass;
-        public string MainClass;
-        public bool UsePascalCase;
-        public bool UseNestedClasses;
-        public bool ApplyObfuscationAttributes;
+        public string Example { get; set; }
+        public string TargetFolder { get; set; }
+        public string Namespace { get; set; }
+        public string SecondaryNamespace { get; set; }
+        public bool UseProperties { get; set; }
+        public bool InternalVisibility { get; set; }
+        public bool ExplicitDeserialization { get; set; }
+        public bool NoHelperClass { get; set; }
+        public string MainClass { get; set; }
+        public bool UsePascalCase { get; set; }
+        public bool UseNestedClasses { get; set; }
+        public bool ApplyObfuscationAttributes { get; set; }
+        public ICodeWriter CodeWriter { get; set; }
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
-
-        private string NamespaceForSecondaryClasses
-        {
-            get
-            {
-                if (SecondaryNamespace != null) return SecondaryNamespace;
-                return Namespace;
-            }
-        }
-        private string Visibility
-        {
-            get
-            {
-                return InternalVisibility ? "internal" : "public";
-            }
-        }
 
 
         public void GenerateClasses()
         {
 
+            if (CodeWriter == null) CodeWriter = new CSharpCodeWriter();
+            if (ExplicitDeserialization && !(CodeWriter is CSharpCodeWriter)) throw new ArgumentException("Explicit deserialization is obsolete and is only supported by the C# provider.");
             if (!Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
 
             var json = JObject.Parse(Example);
@@ -72,30 +59,29 @@ namespace Xamasoft.JsonCSharpClassGenerator
         private void GenerateClass(JObject[] examples, string className, bool isRoot)
         {
             var hasSecondaryClasses = false;
-            var fields = new Dictionary<string, JsonType>();
+            var jsonFields = new Dictionary<string, JsonType>();
 
             var first = true;
-            var applyNoRenamingAttribute = ApplyObfuscationAttributes && !ExplicitDeserialization && !UsePascalCase;
-            var applyNoPruneAttribute = ApplyObfuscationAttributes && !ExplicitDeserialization && UseProperties;
+        
             foreach (var obj in examples)
             {
                 foreach (var prop in obj.Properties())
                 {
                     JsonType fieldType;
-                    var currentType = new JsonType(prop.Value);
+                    var currentType = new JsonType(this, prop.Value);
                     var propName = prop.Name;
-                    if (fields.TryGetValue(propName, out fieldType))
+                    if (jsonFields.TryGetValue(propName, out fieldType))
                     {
 
                         var commonType = fieldType.GetCommonType(currentType);
 
-                        fields[propName] = commonType;
+                        jsonFields[propName] = commonType;
                     }
                     else
                     {
                         var commonType = currentType;
-                        if (!first) commonType = commonType.GetCommonType(JsonType.Null);
-                        fields.Add(propName, commonType);
+                        if (!first) commonType = commonType.GetCommonType(JsonType.GetNull(this));
+                        jsonFields.Add(propName, commonType);
                     }
                 }
                 first = false;
@@ -103,13 +89,13 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
             if (UseNestedClasses)
             {
-                foreach (var field in fields)
+                foreach (var field in jsonFields)
                 {
                     GeneratedNames.Add(field.Key.ToLower());
                 }
             }
 
-            foreach (var field in fields)
+            foreach (var field in jsonFields)
             {
                 var type = field.Value;
                 if (type.Type == JsonTypeEnum.Object)
@@ -164,9 +150,7 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 }
             }
 
-            var fieldsList = fields.Select(x => new FieldInfo(x.Key, x.Value, UsePascalCase)).ToArray();
-
-            var shouldSuppressWarning = InternalVisibility && !UseProperties && !ExplicitDeserialization;
+            var fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase)).ToArray();
 
             var folder = TargetFolder;
             if (!UseNestedClasses && !isRoot && SecondaryNamespace != null)
@@ -177,99 +161,15 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 Directory.CreateDirectory(folder);
             }
 
-            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + ".cs"), false, Encoding.UTF8))
+            using (var sw = new StreamWriter(Path.Combine(folder, (UseNestedClasses && !isRoot ? MainClass + "." : "") + className + CodeWriter.FileExtension), false, Encoding.UTF8))
             {
-
-                sw.WriteLine("// JSON C# Class Generator");
-                sw.WriteLine("// http://www.xamasoft.com/json-csharp-class-generator");
-                sw.WriteLine();
-                sw.WriteLine("using System;");
-                sw.WriteLine("using System.Collections.Generic;");
-                if (applyNoRenamingAttribute || applyNoPruneAttribute)
-                    sw.WriteLine("using System.Reflection;");
-                if (!ExplicitDeserialization && UsePascalCase)
-                    sw.WriteLine("using Newtonsoft.Json;");
-                sw.WriteLine("using Newtonsoft.Json.Linq;");
-                if (ExplicitDeserialization)
-                    sw.WriteLine("using JsonCSharpClassGenerator;");
-                if (SecondaryNamespace != null && isRoot && hasSecondaryClasses && !UseNestedClasses)
-                {
-                    sw.WriteLine("using {0};", SecondaryNamespace);
-                }
-                sw.WriteLine();
-                sw.WriteLine("namespace {0}", isRoot && !UseNestedClasses ? Namespace : NamespaceForSecondaryClasses);
-                sw.WriteLine("{");
-                sw.WriteLine();
-
-                if (UseNestedClasses)
-                {
-                    sw.WriteLine("    {0} partial class {1}", Visibility, MainClass);
-                    sw.WriteLine("    {");
-                    if (!isRoot)
-                    {
-                        if (applyNoRenamingAttribute) sw.WriteLine("        " + NoRenameAttribute);
-                        if (applyNoPruneAttribute) sw.WriteLine("        " + NoPruneAttribute);
-                        sw.WriteLine("        {0} class {1}", Visibility, className);
-                        sw.WriteLine("        {");
-                    }
-                }
-                else
-                {
-                    if (applyNoRenamingAttribute) sw.WriteLine("    " + NoRenameAttribute);
-                    if (applyNoPruneAttribute) sw.WriteLine("    " + NoPruneAttribute);
-                    sw.WriteLine("    {0} class {1}", Visibility, className);
-                    sw.WriteLine("    {");
-                }
-
-                var prefix = UseNestedClasses && !isRoot ? "            " : "        ";
-
-
-                if (shouldSuppressWarning)
-                {
-                    sw.WriteLine("#pragma warning disable 0649");
-                    if (!UsePascalCase) sw.WriteLine();
-                }
-
-                if (isRoot && ExplicitDeserialization) WriteStringConstructor(sw, className, prefix);
-
-                if (ExplicitDeserialization)
-                {
-                    if (UseProperties) WriteClassWithPropertiesExplicitDeserialization(sw, className, fieldsList, isRoot, prefix);
-                    else WriteClassWithFieldsExplicitDeserialization(sw, className, fieldsList, isRoot, prefix);
-                }
-                else
-                {
-                    WriteClassMembers(sw, fieldsList, prefix);
-                }
-
-                if (shouldSuppressWarning)
-                {
-                    sw.WriteLine();
-                    sw.WriteLine("#pragma warning restore 0649");
-                    sw.WriteLine();
-                }
-
-
-                if (UseNestedClasses && !isRoot)
-                    sw.WriteLine("        }");
-
-                sw.WriteLine("    }");
-
-
-                sw.WriteLine("}");
-
-
-
-
-
+                CodeWriter.WriteClass(sw, this, className, fields, isRoot, hasSecondaryClasses);
             }
 
 
         }
 
         private HashSet<string> GeneratedNames = new HashSet<string>();
-        private const string NoRenameAttribute = "[Obfuscation(Feature = \"renaming\", Exclude = true)]";
-        private const string NoPruneAttribute = "[Obfuscation(Feature = \"trigger\", Exclude = false)]";
 
         private string CreateName(string name)
         {
@@ -293,125 +193,8 @@ namespace Xamasoft.JsonCSharpClassGenerator
         private string CreateNameFromPlural(string plural)
         {
             plural = ToTitleCase(plural);
-
-
-
             return CreateName(pluralizationService.Singularize(plural));
         }
-
-        private void WriteStringConstructor(StreamWriter sw, string className, string prefix)
-        {
-            sw.WriteLine();
-            sw.WriteLine(prefix + "public {1}(string json)", Visibility, className);
-            sw.WriteLine(prefix + "    : this(JObject.Parse(json))");
-            sw.WriteLine(prefix + "{");
-            sw.WriteLine(prefix + "}");
-            sw.WriteLine();
-        }
-
-        private void WriteClassWithFieldsExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
-        {
-
-
-            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
-            sw.WriteLine(prefix + "{");
-
-            foreach (var field in fields)
-            {
-                sw.WriteLine(prefix + "    this.{0} = {1};", field.MemberName, field.GetGenerationCode("obj"));
-
-            }
-
-            sw.WriteLine(prefix + "}");
-            sw.WriteLine();
-
-
-
-            foreach (var field in fields)
-            {
-                sw.WriteLine(prefix + "public readonly {0} {1};", field.Type.GetCSharpType(false), field.MemberName);
-            }
-
-
-
-        }
-
-
-
-        private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields, string prefix)
-        {
-            foreach (var field in fields)
-            {
-                if (UsePascalCase)
-                {
-                    sw.WriteLine();
-                    sw.WriteLine(prefix + "[JsonProperty(\"{0}\")]", field.JsonMemberName);
-                }
-
-                if (UseProperties)
-                {
-                    sw.WriteLine(prefix + "public {0} {1} {{ get; set; }}", field.Type.GetCSharpType(true), field.MemberName);
-                }
-                else
-                {
-                    sw.WriteLine(prefix + "public {0} {1};", field.Type.GetCSharpType(true), field.MemberName);
-                }
-            }
-
-        }
-
-
-
-
-
-
-
-
-        private void WriteClassWithPropertiesExplicitDeserialization(StreamWriter sw, string className, FieldInfo[] fields, bool isRoot, string prefix)
-        {
-
-            sw.WriteLine(prefix + "private JObject __jobject;");
-            sw.WriteLine(prefix + "public {0}(JObject obj)", className);
-            sw.WriteLine(prefix + "{");
-            sw.WriteLine(prefix + "    this.__jobject = obj;");
-            sw.WriteLine(prefix + "}");
-            sw.WriteLine();
-
-            foreach (var field in fields)
-            {
-
-                string variable = null;
-                if (field.Type.MustCache)
-                {
-                    variable = "_" + char.ToLower(field.MemberName[0]) + field.MemberName.Substring(1);
-                    sw.WriteLine(prefix + "[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]");
-                    sw.WriteLine(prefix + "private {0} {1};", field.Type.GetCSharpType(false), variable);
-                }
-
-
-                sw.WriteLine(prefix + "public {0} {1}", field.Type.GetCSharpType(false), field.MemberName);
-                sw.WriteLine(prefix + "{");
-                sw.WriteLine(prefix + "    get");
-                sw.WriteLine(prefix + "    {");
-                if (field.Type.MustCache)
-                {
-                    sw.WriteLine(prefix + "        if ({0} == null)", variable);
-                    sw.WriteLine(prefix + "            {0} = {1};", variable, field.GetGenerationCode("__jobject"));
-                    sw.WriteLine(prefix + "        return {0};", variable);
-                }
-                else
-                {
-                    sw.WriteLine(prefix + "        return {0};", field.GetGenerationCode("__jobject"));
-                }
-                sw.WriteLine(prefix + "    }");
-                sw.WriteLine(prefix + "}");
-                sw.WriteLine();
-
-            }
-
-        }
-
-
 
 
 

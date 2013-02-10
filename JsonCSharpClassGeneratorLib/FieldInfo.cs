@@ -10,13 +10,15 @@ namespace Xamasoft.JsonCSharpClassGenerator
     public class FieldInfo
     {
 
-        public FieldInfo(string jsonMemberName, JsonType type, bool usePascalCase)
+        public FieldInfo(IJsonClassGeneratorConfig generator, string jsonMemberName, JsonType type, bool usePascalCase)
         {
+            this.generator = generator;
             this.JsonMemberName = jsonMemberName;
             this.MemberName = jsonMemberName;
             if (usePascalCase) MemberName = JsonClassGenerator.ToTitleCase(MemberName);
             this.Type = type;
         }
+        private IJsonClassGeneratorConfig generator;
         public string MemberName { get; private set; }
         public string JsonMemberName { get; private set; }
         public JsonType Type { get; private set; }
@@ -29,12 +31,12 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 var innermost = field.Type.GetInnermostType();
                 return string.Format("({1})JsonClassHelper.ReadArray<{5}>(JsonClassHelper.GetJToken<JArray>({0}, \"{2}\"), JsonClassHelper.{3}, typeof({6}))",
                     jobject,
-                    field.Type.GetCSharpType(false),
+                    field.Type.GetCSharpType(),
                     field.JsonMemberName,
                     innermost.GetReaderName(),
                     -1,
-                    innermost.GetCSharpType(false),
-                    field.Type.GetCSharpType(false)
+                    innermost.GetCSharpType(),
+                    field.Type.GetCSharpType()
                     );
             }
             else if (field.Type.Type == JsonTypeEnum.Dictionary)
@@ -42,10 +44,10 @@ namespace Xamasoft.JsonCSharpClassGenerator
   
                 return string.Format("({1})JsonClassHelper.ReadDictionary<{2}>(JsonClassHelper.GetJToken<JObject>({0}, \"{3}\"))",
                     jobject,
-                    field.Type.GetCSharpType(false),
-                    field.Type.InternalType.GetCSharpType(false),
+                    field.Type.GetCSharpType(),
+                    field.Type.InternalType.GetCSharpType(),
                     field.JsonMemberName,
-                    field.Type.GetCSharpType(false)
+                    field.Type.GetCSharpType()
                     );
             }
             else
