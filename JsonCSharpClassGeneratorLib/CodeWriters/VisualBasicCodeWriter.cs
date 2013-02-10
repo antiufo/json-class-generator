@@ -99,7 +99,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
             sw.WriteLine("    End Class");
 
-
+            sw.WriteLine();
             sw.WriteLine("End Namespace");
 
 
