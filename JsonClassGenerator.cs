@@ -11,7 +11,7 @@ using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 
 
-namespace JsonCSharpClassGenerator
+namespace Xamasoft.JsonCSharpClassGenerator
 {
     public class JsonClassGenerator
     {

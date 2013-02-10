@@ -8,7 +8,7 @@
     <ProjectGuid>{A7442683-2415-4DD4-9C52-824F7AF89ABC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JsonCSharpClassGenerator</RootNamespace>
+    <RootNamespace>Xamasoft.JsonCSharpClassGenerator</RootNamespace>
     <AssemblyName>JsonCSharpClassGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,4 +1,4 @@
-﻿namespace JsonCSharpClassGenerator
+﻿namespace Xamasoft.JsonCSharpClassGenerator
 {
     partial class frmAbout
     {
@@ -52,7 +52,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::JsonCSharpClassGenerator.Properties.Resources.logo;
+            this.pictureBox1.Image = global::Xamasoft.JsonCSharpClassGenerator.Properties.Resources.logo;
             this.pictureBox1.Location = new System.Drawing.Point(26, 24);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(241, 30);

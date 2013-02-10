@@ -1,4 +1,4 @@
-﻿namespace JsonCSharpClassGenerator
+﻿namespace Xamasoft.JsonCSharpClassGenerator
 {
     partial class frmCSharpClassGeneration
     {
@@ -245,7 +245,7 @@
             // btnAbout
             // 
             this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.Image = global::JsonCSharpClassGenerator.Properties.Resources.help;
+            this.btnAbout.Image = global::Xamasoft.JsonCSharpClassGenerator.Properties.Resources.help;
             this.btnAbout.Location = new System.Drawing.Point(669, 6);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(26, 24);
@@ -325,8 +325,8 @@
             // chkApplyObfuscationAttributes
             // 
             this.chkApplyObfuscationAttributes.AutoSize = true;
-            this.chkApplyObfuscationAttributes.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.ApplyObfuscationAttributes;
-            this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkApplyObfuscationAttributes.Checked = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.ApplyObfuscationAttributes;
+            this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkApplyObfuscationAttributes.Location = new System.Drawing.Point(349, 211);
             this.chkApplyObfuscationAttributes.Name = "chkApplyObfuscationAttributes";
             this.chkApplyObfuscationAttributes.Size = new System.Drawing.Size(203, 17);
@@ -337,8 +337,8 @@
             // chkExplicitDeserialization
             // 
             this.chkExplicitDeserialization.AutoSize = true;
-            this.chkExplicitDeserialization.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.UseExplicitDeserialization;
-            this.chkExplicitDeserialization.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "UseExplicitDeserialization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkExplicitDeserialization.Checked = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.UseExplicitDeserialization;
+            this.chkExplicitDeserialization.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "UseExplicitDeserialization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkExplicitDeserialization.Location = new System.Drawing.Point(349, 165);
             this.chkExplicitDeserialization.Name = "chkExplicitDeserialization";
             this.chkExplicitDeserialization.Size = new System.Drawing.Size(198, 17);
@@ -350,9 +350,9 @@
             // chkPascalCase
             // 
             this.chkPascalCase.AutoSize = true;
-            this.chkPascalCase.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.UsePascalCase;
+            this.chkPascalCase.Checked = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.UsePascalCase;
             this.chkPascalCase.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPascalCase.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "UsePascalCase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkPascalCase.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "UsePascalCase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkPascalCase.Location = new System.Drawing.Point(349, 142);
             this.chkPascalCase.Name = "chkPascalCase";
             this.chkPascalCase.Size = new System.Drawing.Size(134, 17);
@@ -362,30 +362,30 @@
             // 
             // edtMainClass
             // 
-            this.edtMainClass.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JsonCSharpClassGenerator.Properties.Settings.Default, "MainClassName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtMainClass.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "MainClassName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtMainClass.Location = new System.Drawing.Point(115, 37);
             this.edtMainClass.Name = "edtMainClass";
             this.edtMainClass.Size = new System.Drawing.Size(185, 20);
             this.edtMainClass.TabIndex = 1;
-            this.edtMainClass.Text = global::JsonCSharpClassGenerator.Properties.Settings.Default.MainClassName;
+            this.edtMainClass.Text = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.MainClassName;
             this.edtMainClass.TextChanged += new System.EventHandler(this.edtMainClass_TextChanged);
             // 
             // edtTargetFolder
             // 
             this.edtTargetFolder.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.edtTargetFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.edtTargetFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JsonCSharpClassGenerator.Properties.Settings.Default, "TargetFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtTargetFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "TargetFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtTargetFolder.Location = new System.Drawing.Point(115, 65);
             this.edtTargetFolder.Name = "edtTargetFolder";
             this.edtTargetFolder.Size = new System.Drawing.Size(155, 20);
             this.edtTargetFolder.TabIndex = 2;
-            this.edtTargetFolder.Text = global::JsonCSharpClassGenerator.Properties.Settings.Default.TargetFolder;
+            this.edtTargetFolder.Text = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.TargetFolder;
             // 
             // chkNoHelper
             // 
             this.chkNoHelper.AutoSize = true;
-            this.chkNoHelper.Checked = global::JsonCSharpClassGenerator.Properties.Settings.Default.NoHelper;
-            this.chkNoHelper.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JsonCSharpClassGenerator.Properties.Settings.Default, "NoHelper", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkNoHelper.Checked = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.NoHelper;
+            this.chkNoHelper.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "NoHelper", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkNoHelper.Location = new System.Drawing.Point(366, 188);
             this.chkNoHelper.Name = "chkNoHelper";
             this.chkNoHelper.Size = new System.Drawing.Size(162, 17);
@@ -395,12 +395,12 @@
             // 
             // edtNamespace
             // 
-            this.edtNamespace.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JsonCSharpClassGenerator.Properties.Settings.Default, "Namespace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.edtNamespace.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default, "Namespace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.edtNamespace.Location = new System.Drawing.Point(115, 9);
             this.edtNamespace.Name = "edtNamespace";
             this.edtNamespace.Size = new System.Drawing.Size(185, 20);
             this.edtNamespace.TabIndex = 0;
-            this.edtNamespace.Text = global::JsonCSharpClassGenerator.Properties.Settings.Default.Namespace;
+            this.edtNamespace.Text = global::Xamasoft.JsonCSharpClassGenerator.Properties.Settings.Default.Namespace;
             this.edtNamespace.TextChanged += new System.EventHandler(this.edtNamespace_TextChanged);
             // 
             // frmCSharpClassGeneration
