@@ -92,23 +92,7 @@ namespace Xamasoft.JsonCSharpClassGenerator.CodeWriters
 
             var prefix = config.UseNestedClasses && !isRoot ? "            " : "        ";
 
-
-            //var shouldSuppressWarning = config.InternalVisibility && !config.UseProperties;
-            //if (shouldSuppressWarning)
-            //{
-            //    sw.WriteLine("#pragma warning disable 0649");
-            //    if (!config.UsePascalCase) sw.WriteLine();
-            //}
-
             WriteClassMembers(config, sw, fields, prefix);
-
-            //if (shouldSuppressWarning)
-            //{
-            //    sw.WriteLine();
-            //    sw.WriteLine("#pragma warning restore 0649");
-            //    sw.WriteLine();
-            //}
-
 
             if (config.UseNestedClasses && !isRoot)
                 sw.WriteLine("        End Class");
