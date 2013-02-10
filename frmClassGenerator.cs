@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 
 
-namespace Xamasoft.JsonCSharpClassGenerator
+namespace Xamasoft.JsonCSharpClassGenerator.UI
 {
     public partial class frmCSharpClassGeneration : Form
     {

@@ -101,9 +101,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
                 first = false;
             }
 
-            //    var totalMembers = fields.Count;
-            //   var totalInstances = examples.Sum(x => x.Count);
-
             if (UseNestedClasses)
             {
                 foreach (var field in fields)
@@ -339,15 +336,6 @@ namespace Xamasoft.JsonCSharpClassGenerator
 
         }
 
-
-        private void WriteClassWithProperties(StreamWriter sw, FieldInfo[] fields)
-        {
-
-            foreach (var field in fields)
-            {
-            }
-
-        }
 
 
         private void WriteClassMembers(StreamWriter sw, FieldInfo[] fields, string prefix)

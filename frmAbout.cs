@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Xamasoft.JsonCSharpClassGenerator
+namespace Xamasoft.JsonCSharpClassGenerator.UI
 {
     public partial class frmAbout : Form
     {

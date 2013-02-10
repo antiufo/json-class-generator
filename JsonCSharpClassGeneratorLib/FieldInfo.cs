@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Xamasoft.JsonCSharpClassGenerator
 {
-    class FieldInfo
+    public class FieldInfo
     {
 
         public FieldInfo(string jsonMemberName, JsonType type, bool usePascalCase)
