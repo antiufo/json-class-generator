@@ -1,5 +1,5 @@
 ﻿// JSON C# Class Generator
-// http://www.xamasoft.com/json-csharp-class-generator
+// http://www.xamasoft.com/json-class-generator
 
 using System;
 using System.Collections.Generic;
