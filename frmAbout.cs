@@ -25,7 +25,7 @@ namespace Xamasoft.JsonClassGenerator.UI
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.xamasoft.com/json-csharp-class-generator");
+            System.Diagnostics.Process.Start("http://www.xamasoft.com/json-class-generator");
         }
 
         private void frmAbout_Load(object sender, EventArgs e)
