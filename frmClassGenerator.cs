@@ -85,7 +85,7 @@ namespace Xamasoft.JsonClassGenerator.UI
             new CSharpCodeWriter(),
             new VisualBasicCodeWriter(),
             new TypeScriptCodeWriter(),
-            new JavaCodeWriter()
+          //  new JavaCodeWriter()
         };
 
         private void edtNamespace_TextChanged(object sender, EventArgs e)
