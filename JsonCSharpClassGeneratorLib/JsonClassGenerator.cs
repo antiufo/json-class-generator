@@ -33,6 +33,7 @@ namespace Xamasoft.JsonClassGenerator
         public bool SingleFile { get; set; }
         public ICodeWriter CodeWriter { get; set; }
         public TextWriter OutputStream { get; set; }
+        public bool AlwaysUseNullableValues { get; set; }
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
@@ -158,7 +159,8 @@ namespace Xamasoft.JsonClassGenerator
                     else
                     {
                         var commonType = currentType;
-                        if (!first) commonType = commonType.GetCommonType(JsonType.GetNull(this));
+                        if (first) commonType = commonType.MaybeMakeNullable(this);
+                        else commonType = commonType.GetCommonType(JsonType.GetNull(this));
                         jsonFields.Add(propName, commonType);
                     }
                 }

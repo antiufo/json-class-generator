@@ -51,7 +51,8 @@ namespace Xamasoft.JsonClassGenerator
 
             if (tokens.Length == 0) return new JsonType(generator, JsonTypeEnum.NonConstrained);
 
-            var common = new JsonType(generator, tokens[0]);
+            var common = new JsonType(generator, tokens[0]).MaybeMakeNullable(generator);
+
             for (int i = 1; i < tokens.Length; i++)
             {
                 var current = new JsonType(generator, tokens[i]);
@@ -60,6 +61,12 @@ namespace Xamasoft.JsonClassGenerator
 
             return common;
 
+        }
+
+        internal JsonType MaybeMakeNullable(IJsonClassGeneratorConfig generator)
+        {
+            if (!generator.AlwaysUseNullableValues) return this;
+            return this.GetCommonType(JsonType.GetNull(generator));
         }
 
 
@@ -160,7 +167,7 @@ namespace Xamasoft.JsonClassGenerator
             {
                 if (type2.Type == JsonTypeEnum.NullableSomething) return this;
                 if (this.Type == JsonTypeEnum.NullableSomething) return type2;
-                var commonInternalType = InternalType.GetCommonType(type2.InternalType);
+                var commonInternalType = InternalType.GetCommonType(type2.InternalType).MaybeMakeNullable(generator);
                 if (commonInternalType != InternalType) return new JsonType(generator, JsonTypeEnum.Array) { InternalType = commonInternalType };
             }
 
@@ -173,7 +180,7 @@ namespace Xamasoft.JsonClassGenerator
 
 
             if (this.Type == commonType) return this;
-            return new JsonType(generator, commonType);
+            return new JsonType(generator, commonType).MaybeMakeNullable(generator);
         }
 
 
