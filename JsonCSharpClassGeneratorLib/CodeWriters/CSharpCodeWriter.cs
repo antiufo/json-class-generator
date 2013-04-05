@@ -24,7 +24,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
 
         public string GetTypeName(JsonType type, IJsonClassGeneratorConfig config)
         {
-            var arraysAsLists = config.ExplicitDeserialization;
+            var arraysAsLists = !config.ExplicitDeserialization;
 
             switch (type.Type)
             {
