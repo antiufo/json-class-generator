@@ -21,5 +21,6 @@ namespace Xamasoft.JsonClassGenerator
         ICodeWriter CodeWriter { get; set; }
         bool HasSecondaryClasses { get; }
         bool AlwaysUseNullableValues { get; set; }
+        bool UseNamespaces { get; }
     }
 }
