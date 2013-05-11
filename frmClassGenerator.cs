@@ -105,6 +105,11 @@ namespace Xamasoft.JsonClassGenerator.UI
                 MessageBox.Show(this, "Please specify an output directory.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (edtNamespace.Text == string.Empty)
+            {
+                MessageBox.Show(this, "Please specify a namespace.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var gen = Prepare();
             if (gen == null) return;
             try
@@ -170,11 +175,7 @@ namespace Xamasoft.JsonClassGenerator.UI
                 return null;
             }
 
-            if (edtNamespace.Text == string.Empty)
-            {
-                MessageBox.Show(this, "Please specify a namespace.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return null;
-            }
+
             if (edtMainClass.Text == string.Empty)
             {
                 MessageBox.Show(this, "Please specify a main class name.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -186,9 +187,9 @@ namespace Xamasoft.JsonClassGenerator.UI
             gen.InternalVisibility = radInternal.Checked;
             gen.CodeWriter = (ICodeWriter)cmbLanguage.SelectedItem;
             gen.ExplicitDeserialization = chkExplicitDeserialization.Checked && gen.CodeWriter is CSharpCodeWriter;
-            gen.Namespace = edtNamespace.Text;
+            gen.Namespace = string.IsNullOrEmpty(edtNamespace.Text) ? null : edtNamespace.Text;
             gen.NoHelperClass = chkNoHelper.Checked;
-            gen.SecondaryNamespace = radDifferentNamespace.Checked ? edtSecondaryNamespace.Text : null;
+            gen.SecondaryNamespace = radDifferentNamespace.Checked && !string.IsNullOrEmpty(edtSecondaryNamespace.Text) ? edtSecondaryNamespace.Text : null;
             gen.TargetFolder = edtTargetFolder.Text;
             gen.UseProperties = radProperties.Checked;
             gen.MainClass = edtMainClass.Text;

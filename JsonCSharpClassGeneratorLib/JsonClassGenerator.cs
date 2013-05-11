@@ -38,6 +38,7 @@ namespace Xamasoft.JsonClassGenerator
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
         private bool used = false;
+        public bool UseNamespaces { get { return Namespace != null; } }
 
         public void GenerateClasses()
         {
@@ -47,12 +48,14 @@ namespace Xamasoft.JsonClassGenerator
             if (used) throw new InvalidOperationException("This instance of JsonClassGenerator has already been used. Please create a new instance.");
             used = true;
 
+
             var writeToDisk = TargetFolder != null;
             if (writeToDisk && !Directory.Exists(TargetFolder)) Directory.CreateDirectory(TargetFolder);
 
 
             JObject[] examples;
-            using (var sr = new StringReader(Example))
+            var example = Example.StartsWith("HTTP/") ? Example.Substring(Example.IndexOf("\r\n\r\n")) : Example;
+            using (var sr = new StringReader(example))
             using (var reader = new JsonTextReader(sr))
             {
                 var json = JToken.ReadFrom(reader);
@@ -127,11 +130,11 @@ namespace Xamasoft.JsonClassGenerator
             CodeWriter.WriteFileStart(this, sw);
             foreach (var type in types)
             {
-                if (inNamespace && rootNamespace != type.IsRoot && SecondaryNamespace != null) { CodeWriter.WriteNamespaceEnd(this, sw, rootNamespace); inNamespace = false; }
-                if (!inNamespace) { CodeWriter.WriteNamespaceStart(this, sw, type.IsRoot); inNamespace = true; rootNamespace = type.IsRoot; }
+                if (UseNamespaces && inNamespace && rootNamespace != type.IsRoot && SecondaryNamespace != null) { CodeWriter.WriteNamespaceEnd(this, sw, rootNamespace); inNamespace = false; }
+                if (UseNamespaces && !inNamespace) { CodeWriter.WriteNamespaceStart(this, sw, type.IsRoot); inNamespace = true; rootNamespace = type.IsRoot; }
                 CodeWriter.WriteClass(this, sw, type);
             }
-            if (inNamespace) CodeWriter.WriteNamespaceEnd(this, sw, rootNamespace);
+            if (UseNamespaces && inNamespace) CodeWriter.WriteNamespaceEnd(this, sw, rootNamespace);
             CodeWriter.WriteFileEnd(this, sw);
         }
 
