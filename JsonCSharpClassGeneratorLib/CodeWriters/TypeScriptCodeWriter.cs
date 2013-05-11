@@ -31,9 +31,9 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
                 case JsonTypeEnum.Date: return "Date";
                 case JsonTypeEnum.NullableInteger:
                 case JsonTypeEnum.NullableLong:
-                case JsonTypeEnum.NullableFloat: return "number?";
-                case JsonTypeEnum.NullableBoolean: return "bool?";
-                case JsonTypeEnum.NullableDate: return "Date?";
+                case JsonTypeEnum.NullableFloat: return "number";
+                case JsonTypeEnum.NullableBoolean: return "bool";
+                case JsonTypeEnum.NullableDate: return "Date";
                 case JsonTypeEnum.Object: return type.AssignedName;
                 case JsonTypeEnum.Array: return GetTypeName(type.InternalType, config) + "[]";
                 case JsonTypeEnum.Dictionary: return "{ [key: string]: " + GetTypeName(type.InternalType, config) + "; }";
@@ -51,10 +51,21 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             foreach (var field in type.Fields)
             {
                 var shouldDefineNamespace = type.IsRoot && config.SecondaryNamespace != null && config.Namespace != null && (field.Type.Type == JsonTypeEnum.Object || (field.Type.InternalType != null && field.Type.InternalType.Type == JsonTypeEnum.Object));
-                sw.WriteLine(prefix + "    " + field.MemberName + ": " + (shouldDefineNamespace ? config.SecondaryNamespace + "." : string.Empty) + GetTypeName(field.Type, config) + ";");
+                sw.WriteLine(prefix + "    " + field.MemberName + (IsNullable(field.Type.Type) ? "?" : "") + ": " + (shouldDefineNamespace ? config.SecondaryNamespace + "." : string.Empty) + GetTypeName(field.Type, config) + ";");
             }
             sw.WriteLine(prefix + "}");
             sw.WriteLine();
+        }
+
+        private bool IsNullable(JsonTypeEnum type)
+        {
+            return
+                type == JsonTypeEnum.NullableBoolean ||
+                type == JsonTypeEnum.NullableDate ||
+                type == JsonTypeEnum.NullableFloat ||
+                type == JsonTypeEnum.NullableInteger ||
+                type == JsonTypeEnum.NullableLong ||
+                type == JsonTypeEnum.NullableSomething;
         }
 
         public void WriteFileStart(IJsonClassGeneratorConfig config, TextWriter sw)
