@@ -62,6 +62,7 @@ namespace Xamasoft.JsonClassGenerator.UI
             }
             settings.Language = cmbLanguage.SelectedItem.GetType().Name;
             settings.SingleFile = chkSingleFile.Checked;
+            settings.DocumentationExamples = chkDocumentationExamples.Checked;
             settings.Save();
         }
 
@@ -78,6 +79,7 @@ namespace Xamasoft.JsonClassGenerator.UI
             var langIndex = CodeWriters.ToList().FindIndex(x => x.GetType().Name == settings.Language);
             cmbLanguage.SelectedIndex = langIndex != -1 ? langIndex : 0;
             chkSingleFile.Checked = settings.SingleFile;
+            chkDocumentationExamples.Checked = settings.DocumentationExamples;
             UpdateStatus();
         }
 
@@ -197,6 +199,7 @@ namespace Xamasoft.JsonClassGenerator.UI
             gen.UseNestedClasses = radNestedClasses.Checked;
             gen.ApplyObfuscationAttributes = chkApplyObfuscationAttributes.Checked;
             gen.SingleFile = chkSingleFile.Checked;
+            gen.ExamplesInDocumentation = chkDocumentationExamples.Checked;
             return gen;
         }
 
@@ -228,6 +231,7 @@ namespace Xamasoft.JsonClassGenerator.UI
 
             var writer = (ICodeWriter)cmbLanguage.SelectedItem;
 
+            chkPascalCase.Enabled = !(writer is TypeScriptCodeWriter);
             chkExplicitDeserialization.Enabled = writer is CSharpCodeWriter;
             chkNoHelper.Enabled = chkExplicitDeserialization.Enabled && chkExplicitDeserialization.Checked;
         }

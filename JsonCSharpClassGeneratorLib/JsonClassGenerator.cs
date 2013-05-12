@@ -34,6 +34,7 @@ namespace Xamasoft.JsonClassGenerator
         public ICodeWriter CodeWriter { get; set; }
         public TextWriter OutputStream { get; set; }
         public bool AlwaysUseNullableValues { get; set; }
+        public bool ExamplesInDocumentation { get; set; }
 
         private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-us"));
 
@@ -142,6 +143,7 @@ namespace Xamasoft.JsonClassGenerator
         private void GenerateClass(JObject[] examples, JsonType type)
         {
             var jsonFields = new Dictionary<string, JsonType>();
+            var fieldExamples = new Dictionary<string, IList<object>>();
 
             var first = true;
 
@@ -165,6 +167,22 @@ namespace Xamasoft.JsonClassGenerator
                         if (first) commonType = commonType.MaybeMakeNullable(this);
                         else commonType = commonType.GetCommonType(JsonType.GetNull(this));
                         jsonFields.Add(propName, commonType);
+                        fieldExamples[propName] = new List<object>();
+                    }
+                    var fe = fieldExamples[propName];
+                    var val = prop.Value;
+                    if (val.Type == JTokenType.Null || val.Type == JTokenType.Undefined)
+                    {
+                        if (!fe.Contains(null))
+                        {
+                            fe.Insert(0, null);
+                        }
+                    }
+                    else
+                    {
+                        var v = val.Type == JTokenType.Array || val.Type == JTokenType.Object ? val : val.Value<object>();
+                        if (!fe.Any(x => v.Equals(x)))
+                            fe.Add(v);
                     }
                 }
                 first = false;
@@ -231,7 +249,7 @@ namespace Xamasoft.JsonClassGenerator
                 }
             }
 
-            type.Fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase)).ToArray();
+            type.Fields = jsonFields.Select(x => new FieldInfo(this, x.Key, x.Value, UsePascalCase, fieldExamples[x.Key])).ToArray();
 
             Types.Add(type);
 

@@ -190,5 +190,17 @@ namespace Xamasoft.JsonClassGenerator.UI.Properties {
                 this["SingleFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DocumentationExamples {
+            get {
+                return ((bool)(this["DocumentationExamples"]));
+            }
+            set {
+                this["DocumentationExamples"] = value;
+            }
+        }
     }
 }
