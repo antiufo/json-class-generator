@@ -95,9 +95,18 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
         {
             foreach (var field in type.Fields)
             {
+                if (config.UsePascalCase || config.ExamplesInDocumentation) sw.WriteLine();
+
+                if (config.ExamplesInDocumentation)
+                {
+                    sw.WriteLine(prefix + "''' <summary>");
+                    sw.WriteLine(prefix + "''' Examples: " + field.GetExamplesText());
+                    sw.WriteLine(prefix + "''' </summary>");
+                }
+
+
                 if (config.UsePascalCase)
                 {
-                    sw.WriteLine();
                     sw.WriteLine(prefix + "<JsonProperty(\"{0}\")>", field.JsonMemberName);
                 }
 

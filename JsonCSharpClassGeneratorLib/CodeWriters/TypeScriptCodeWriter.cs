@@ -51,7 +51,16 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             foreach (var field in type.Fields)
             {
                 var shouldDefineNamespace = type.IsRoot && config.SecondaryNamespace != null && config.Namespace != null && (field.Type.Type == JsonTypeEnum.Object || (field.Type.InternalType != null && field.Type.InternalType.Type == JsonTypeEnum.Object));
-                sw.WriteLine(prefix + "    " + field.MemberName + (IsNullable(field.Type.Type) ? "?" : "") + ": " + (shouldDefineNamespace ? config.SecondaryNamespace + "." : string.Empty) + GetTypeName(field.Type, config) + ";");
+                if (config.ExamplesInDocumentation)
+                {
+                    sw.WriteLine();
+                    sw.WriteLine(prefix + "    /**");
+                    sw.WriteLine(prefix + "      * Examples: " + field.GetExamplesText());
+                    sw.WriteLine(prefix + "      */");
+                }
+
+
+                sw.WriteLine(prefix + "    " + field.JsonMemberName + (IsNullable(field.Type.Type) ? "?" : "") + ": " + (shouldDefineNamespace ? config.SecondaryNamespace + "." : string.Empty) + GetTypeName(field.Type, config) + ";");
             }
             sw.WriteLine(prefix + "}");
             sw.WriteLine();

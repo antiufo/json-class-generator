@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -179,15 +180,22 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
 
 
 
-
-
         private void WriteClassMembers(IJsonClassGeneratorConfig config, TextWriter sw, JsonType type, string prefix)
         {
             foreach (var field in type.Fields)
             {
+                if (config.UsePascalCase || config.ExamplesInDocumentation) sw.WriteLine();
+
+                if (config.ExamplesInDocumentation)
+                {
+                    sw.WriteLine(prefix + "/// <summary>");
+                    sw.WriteLine(prefix + "/// Examples: " + field.GetExamplesText());
+                    sw.WriteLine(prefix + "/// </summary>");
+                }
+
                 if (config.UsePascalCase)
                 {
-                    sw.WriteLine();
+
                     sw.WriteLine(prefix + "[JsonProperty(\"{0}\")]", field.JsonMemberName);
                 }
 

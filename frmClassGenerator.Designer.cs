@@ -68,6 +68,7 @@
             this.messageTimer = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.lblDoneClipboard = new System.Windows.Forms.Label();
+            this.chkDocumentationExamples = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -89,19 +90,19 @@
             this.edtJson.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.edtJson.Location = new System.Drawing.Point(15, 279);
+            this.edtJson.Location = new System.Drawing.Point(15, 253);
             this.edtJson.MaxLength = 10000000;
             this.edtJson.Multiline = true;
             this.edtJson.Name = "edtJson";
             this.edtJson.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.edtJson.Size = new System.Drawing.Size(680, 245);
+            this.edtJson.Size = new System.Drawing.Size(680, 271);
             this.edtJson.TabIndex = 14;
             this.edtJson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edtJson_KeyDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 253);
+            this.label1.Location = new System.Drawing.Point(12, 237);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(199, 13);
             this.label1.TabIndex = 6;
@@ -140,7 +141,7 @@
             // radFields
             // 
             this.radFields.AutoSize = true;
-            this.radFields.Location = new System.Drawing.Point(3, 26);
+            this.radFields.Location = new System.Drawing.Point(81, 3);
             this.radFields.Name = "radFields";
             this.radFields.Size = new System.Drawing.Size(52, 17);
             this.radFields.TabIndex = 1;
@@ -150,7 +151,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(346, 74);
+            this.label3.Location = new System.Drawing.Point(346, 38);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 15;
@@ -159,7 +160,7 @@
             // radPublic
             // 
             this.radPublic.AutoSize = true;
-            this.radPublic.Location = new System.Drawing.Point(3, 26);
+            this.radPublic.Location = new System.Drawing.Point(69, 3);
             this.radPublic.Name = "radPublic";
             this.radPublic.Size = new System.Drawing.Size(54, 17);
             this.radPublic.TabIndex = 1;
@@ -172,10 +173,9 @@
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Controls.Add(this.radProperties);
             this.flowLayoutPanel1.Controls.Add(this.radFields);
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(363, 25);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(458, 4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(78, 46);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(136, 23);
             this.flowLayoutPanel1.TabIndex = 7;
             // 
             // radProperties
@@ -196,10 +196,9 @@
             this.flowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel2.Controls.Add(this.radInternal);
             this.flowLayoutPanel2.Controls.Add(this.radPublic);
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(363, 90);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(458, 33);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(66, 46);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(126, 23);
             this.flowLayoutPanel2.TabIndex = 8;
             // 
             // radInternal
@@ -334,7 +333,7 @@
             this.chkApplyObfuscationAttributes.AutoSize = true;
             this.chkApplyObfuscationAttributes.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.ApplyObfuscationAttributes;
             this.chkApplyObfuscationAttributes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "ApplyObfuscationAttributes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkApplyObfuscationAttributes.Location = new System.Drawing.Point(349, 211);
+            this.chkApplyObfuscationAttributes.Location = new System.Drawing.Point(349, 136);
             this.chkApplyObfuscationAttributes.Name = "chkApplyObfuscationAttributes";
             this.chkApplyObfuscationAttributes.Size = new System.Drawing.Size(203, 17);
             this.chkApplyObfuscationAttributes.TabIndex = 12;
@@ -346,7 +345,7 @@
             this.chkExplicitDeserialization.AutoSize = true;
             this.chkExplicitDeserialization.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.UseExplicitDeserialization;
             this.chkExplicitDeserialization.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "UseExplicitDeserialization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkExplicitDeserialization.Location = new System.Drawing.Point(349, 165);
+            this.chkExplicitDeserialization.Location = new System.Drawing.Point(349, 90);
             this.chkExplicitDeserialization.Name = "chkExplicitDeserialization";
             this.chkExplicitDeserialization.Size = new System.Drawing.Size(198, 17);
             this.chkExplicitDeserialization.TabIndex = 10;
@@ -360,7 +359,7 @@
             this.chkPascalCase.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.UsePascalCase;
             this.chkPascalCase.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPascalCase.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "UsePascalCase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkPascalCase.Location = new System.Drawing.Point(349, 142);
+            this.chkPascalCase.Location = new System.Drawing.Point(349, 67);
             this.chkPascalCase.Name = "chkPascalCase";
             this.chkPascalCase.Size = new System.Drawing.Size(134, 17);
             this.chkPascalCase.TabIndex = 9;
@@ -393,7 +392,7 @@
             this.chkNoHelper.AutoSize = true;
             this.chkNoHelper.Checked = global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default.NoHelper;
             this.chkNoHelper.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Xamasoft.JsonClassGenerator.UI.Properties.Settings.Default, "NoHelper", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkNoHelper.Location = new System.Drawing.Point(366, 188);
+            this.chkNoHelper.Location = new System.Drawing.Point(366, 113);
             this.chkNoHelper.Name = "chkNoHelper";
             this.chkNoHelper.Size = new System.Drawing.Size(162, 17);
             this.chkNoHelper.TabIndex = 11;
@@ -413,7 +412,7 @@
             // chkSingleFile
             // 
             this.chkSingleFile.AutoSize = true;
-            this.chkSingleFile.Location = new System.Drawing.Point(349, 235);
+            this.chkSingleFile.Location = new System.Drawing.Point(349, 160);
             this.chkSingleFile.Name = "chkSingleFile";
             this.chkSingleFile.Size = new System.Drawing.Size(125, 17);
             this.chkSingleFile.TabIndex = 13;
@@ -486,12 +485,23 @@
             this.lblDoneClipboard.Text = "Done! Classes copied to clipboard";
             this.lblDoneClipboard.Visible = false;
             // 
+            // chkDocumentationExamples
+            // 
+            this.chkDocumentationExamples.AutoSize = true;
+            this.chkDocumentationExamples.Location = new System.Drawing.Point(349, 183);
+            this.chkDocumentationExamples.Name = "chkDocumentationExamples";
+            this.chkDocumentationExamples.Size = new System.Drawing.Size(236, 17);
+            this.chkDocumentationExamples.TabIndex = 40;
+            this.chkDocumentationExamples.Text = "Generate documentation with data examples";
+            this.chkDocumentationExamples.UseVisualStyleBackColor = true;
+            // 
             // frmCSharpClassGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(707, 564);
+            this.Controls.Add(this.chkDocumentationExamples);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lnkOpenFolder);
             this.Controls.Add(this.lblDoneClipboard);
@@ -579,6 +589,7 @@
         private System.Windows.Forms.Timer messageTimer;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblDoneClipboard;
+        private System.Windows.Forms.CheckBox chkDocumentationExamples;
     }
 }
 
