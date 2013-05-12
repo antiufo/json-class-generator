@@ -230,6 +230,7 @@ namespace Xamasoft.JsonClassGenerator
                             {
                                 foreach (var item in (JArray)value)
                                 {
+                                    if (!(item is JObject)) throw new NotSupportedException("Arrays of non-objects are not supported yet.");
                                     subexamples.Add((JObject)item);
                                 }
 
@@ -238,6 +239,8 @@ namespace Xamasoft.JsonClassGenerator
                             {
                                 foreach (var item in (JObject)value)
                                 {
+                                    if (!(item.Value is JObject)) throw new NotSupportedException("Arrays of non-objects are not supported yet.");
+
                                     subexamples.Add((JObject)item.Value);
                                 }
                             }
