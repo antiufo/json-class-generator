@@ -186,7 +186,7 @@ namespace Xamasoft.JsonClassGenerator.CodeWriters
             {
                 if (config.UsePascalCase || config.ExamplesInDocumentation) sw.WriteLine();
 
-                if (config.ExamplesInDocumentation)
+                if (config.ExamplesInDocumentation && field.ShouldIncludeExample)
                 {
                     sw.WriteLine(prefix + "/// <summary>");
                     sw.WriteLine(prefix + "/// Examples: " + field.GetExamplesText());
