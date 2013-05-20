@@ -71,5 +71,15 @@ namespace Xamasoft.JsonClassGenerator
             return string.Join(", ", Examples.Take(5).Select(x => JsonConvert.SerializeObject(x)).ToArray());
         }
 
+
+        public bool ShouldIncludeExample
+        {
+            get
+            {
+                return Type.Type != JsonTypeEnum.Array && Type.Type != JsonTypeEnum.Object && Examples.Any();
+            }
+        }
+
+
     }
 }
